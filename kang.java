@@ -1,7 +1,7 @@
 package TeamProject;
 
 import java.util.*;
-
+// bbb
 //캐릭터 클래스
 class Character {
 	 private String name;
