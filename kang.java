@@ -1,7 +1,7 @@
 package TeamProject;
 
 import java.util.*;
-// test 2
+// test 2 3 4
 //캐릭터 클래스
 class Character {
 	 private String name;
