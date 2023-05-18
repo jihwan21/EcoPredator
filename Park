@@ -18,3 +18,37 @@ public class Player {// 공동으로 사용되는 것은 정적변수를 사용�
     }
   }
 }
+
+public class Mosquito {
+	final String tribe = "모기";
+	int level = 1, power = 10, defense = 10, money = 1, hp = 100, hpMax = 100, mp = 50, mpMax = 50;// 레벨, 힘, 방어력, 돈,
+																									// 체력/최대체력, 마나/최대마나
+	int buff = 0, debuff = 0;// 버프와 디버프
+	int upgradeS01 = 0;// 스킬강화 수치
+
+	void setStatus() {// 생물별로 다른 스탯을 플레이어 전역변수에 저장하는 메서드
+		Player.level = level;
+		Player.power = power;
+		Player.defense = defense;
+		Player.hp = hp;
+		Player.hpMax = hpMax;
+		Player.mp = mp;
+		Player.mpMax = mpMax;
+		Player.upgradeS01 = upgradeS01;
+	}
+
+	public int skill01() {//몬스터 고유스킬 흡혈공격
+		
+		if(Player.hp < Player.hpMax) {
+			int heal = (level * power + buff + debuff + upgradeS01)/100*10;//입힌피해의 10%만큼 힐
+			if(Player.hp + heal >= Player.hpMax)//힐량+현재체력이 최대체력을 넘으면 현재체력을 최대체력으로
+				Player.hp = Player.hpMax;
+			else
+				Player.hp += heal;//넘지 않는다면 힐(흡혈)
+		}
+		return level * power + buff + debuff + upgradeS01;//데미지 리턴
+		
+	}
+}
+
+
