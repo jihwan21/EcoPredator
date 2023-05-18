@@ -24,7 +24,7 @@ class Character {
 }
 
 class Exploration {
-	private List<String> areas; // 탐험 가능한 영역 리스트
+	private List<String> areas; // 탐험 가능한 영역 리스트(position 개념)
 	private List<String> stages; // 각 영역의 스테이지 리스트
 	private Map<String, List<Monster>> stageMonsters; // 스테이지에 등장하는 몬스터 리스트
 
