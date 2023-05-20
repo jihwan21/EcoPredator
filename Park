@@ -27,14 +27,13 @@ public class Mosquito extends Monster {
 	int buff, debuff;// 버프와 디버프
 	int upgradeS01;// 스킬강화 수치
 
-	Mosquito(){
+	Mosquito(int level){
 		this.tribe = "모기";
-		this.level = 1; this.power = 10; this.defense = 10; this.money = 1; 
-		this.hp = 100; this.hpMax = 100; this.mp = 50; this.mpMax = 50;
+		this.level = level; this.power = 10 * level; this.defense = 10 * level; this.money = 1; 
+		this.hp = 100 * level; this.hpMax = 100 * level; this.mp = 50; this.mpMax = 50;
 		this.buff = 0; this.debuff = 0;
 		this.upgradeS01 = 0;
 	}
-	
 	
 	public int skill01() {// 몬스터 고유스킬 흡혈공격
 
