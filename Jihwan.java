@@ -234,3 +234,20 @@ public class Jihwan {
 	}
 
 }
+
+//==============================================================================================================================
+
+
+
+
+public class HPPotion {
+	String name = "HP포션";
+	int price = 15;//가격
+	int healA = 30;//힐량
+
+	public void heal() {
+		for (int i = 0; i < healA && Player.hp < Player.hpMax; i++)
+			Player.hp += 1;
+		Player.hpPotionN -= 1;
+	}
+}
