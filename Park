@@ -88,7 +88,7 @@ public class Mosquito extends Monster {
 	}
 }
 
-//
+//==========================================================================================================================
 public static void selectMonster() {
 		Scanner in = new Scanner(System.in);
 		int s = in.nextInt();
@@ -173,5 +173,182 @@ public static void selectMonster() {
 		}
 	}
 
+//==========================================================================================================================
+	public static void selectMonster() {
+		Scanner in = new Scanner(System.in);
+		int s = in.nextInt();
+		if (s == 1) {
+			Mosquito m1 = new Mosquito();
+			battle(m1);
+		} else if (s == 2) {
+			Baki m2 = new Baki();
+			battle(m2);
+		}
+	}
+
+	public static void battle(Monster m1) {// 배틀 메서드
+		Scanner in = new Scanner(System.in);
+		System.out.println(m1.tribe + "와의 전투를 시작합니다.");
+		m1.printM();
+		
+		while (true) {
+			//=================================================플레이어 공격
+			System.out.println(Player.name + "의 공격입니다.");
+			int select = in.nextInt();
+			int demage = 0;
+			if(select == 1)
+				demage = Player.p.skill01();
+			else if(select == 2)
+			{
+				Strategy_attack sa1 = new Strategy_attack();
+				sa1.sAttack(m1, select);
+			}
+			else if(select == 3) {
+				System.out.println("무사히 도망쳤다.");
+				break;
+			}
+			m1.hp -= demage;
+			//=================================================몬스터가 죽으면
+			if(m1.hp < 1)
+			{
+				System.out.println(m1.tribe + "가 쓰러졌습니다.");
+				System.out.println(m1.money + "골드를 얻었습니다.");
+				System.out.println(m1.exp + "경험치를 얻었습니다.");
+				Player.pMoney += m1.money;
+				Player.exp += m1.exp;
+				if(Player.exp >= Player.expMax)//레벨업
+				{
+					System.out.printf("레벨이 올랐습니다.");
+					Player.level += 1;
+				}
+				break;
+			}
+			// ===============================================플레이어의 방어와 몬스터의 공격
+			System.out.println("방어턴입니다. 할일을 선택하세요");
+			System.out.println("1. 포션사용");
+			System.out.println("2. 전략적 선택지 사용");
+			select = in.nextInt();
+			demage = 0;
+			if(select == 1)
+			{
+				if(Player.hpPotionN > 0)
+				{
+					HPPotion p1 = new HPPotion();
+					p1.heal();
+				}
+				else
+					System.out.println("포션 개수가 부족합니다.");
+			}
+			else if(select == 2)
+			{
+				if(Player.hpMax / Player.hp  > 10)//10% 이하로 떨어지면
+				{
+					
+				}
+			}
+			else if(select == 3) {
+				System.out.println("무사히 도망쳤다.");
+				break;
+			}
+			
+			
+			System.out.println(m1.tribe + "의 공격입니다.");
+			System.out.println(m1.skill01());// 공격스킬 1번
+
+		}
+	}
+
+//==========================================================================================================================
+	
+	public class Monster {
+	String tribe;
+	int level, power, defense, money, hp, hpMax, mp, mpMax, exp;
+	// 체력/최대체력, 마나/최대마나
+	int buff, debuff;
+	int upgradeS01;
+
+	void setStatus() {// 생물별로 다른 스탯을 플레이어 전역변수에 저장하는 메서드
+		Player.tribe = tribe;
+		Player.level = level;
+		Player.power = power;
+		Player.defense = defense;
+		Player.hp = hp;
+		Player.hpMax = hpMax;
+		Player.mp = mp;
+		Player.mpMax = mpMax;
+		Player.upgradeS01 = upgradeS01;
+	}
+
+	public int skill01() {
+		return 0;
+	}
+
+	public void printM() {
+	}
+}
+//==========================================================================================================================
 
 
+import javax.swing.JFrame;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+
+public class Status extends JFrame {
+	JTable table;
+	JScrollPane scroll; // 테이블 위에 열 라벨을 넣어주자~ scroll
+	String[][] data; // 3명의 정보를 담을 2차원 배열을 생성한다.
+	String[] title = { "  ", "  ", "  " }; // 제목
+
+	public Status() {
+		// 플레이어 클래스 필수 -> 플레이어 클래스로 객체 생성-> 사실상 필드멤버를 복사
+		data = new String[8][3];
+		data[0][0] = "칭호";
+		data[0][1] = Player.style;
+
+		data[1][0] = "이름";
+		data[1][1] = Player.name;
+
+		data[2][0] = "종족";
+		data[2][1] = Player.p.tribe;
+
+		data[3][0] = "레벨";
+		data[3][1] = Integer.toString(Player.level);
+
+		data[4][0] = "현재HP/최대HP";
+		data[4][1] = Integer.toString(Player.hp);
+		data[4][2] = Integer.toString(Player.hpMax);
+
+		data[5][0] = "현재MP/최대MP";
+		data[5][1] = Integer.toString(Player.mp);
+		data[5][2] = Integer.toString(Player.mpMax);
+
+		data[6][0] = "돈";
+		data[6][1] = Integer.toString(Player.pMoney);
+
+		data[7][0] = "경험치";
+
+		table = new JTable(data, title);
+		scroll = new JScrollPane(table);
+		add(scroll);
+
+		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
+		pack();
+		setSize(400, 350);
+		setVisible(true);
+	}
+}
+
+//==========================================================================================================================
+public class Strategy_attack {
+	String s1 = "전략적 선택지 1번 : 1턴 동안 공격력 100% 증가 그러나~but! 다음턴 스킬 1회 봉인",
+			s2 = "전략적 선택지 2번 : 공격력 300% 증가! 그런데 이제 받는 데미지 300% 증가를 곁들인..";
+
+	
+	public int sAttack(Monster m1, int select){
+		if(select == 1)
+		{
+			
+		}
+		return 1;
+	}
+}
