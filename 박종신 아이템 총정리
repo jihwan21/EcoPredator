@@ -68,8 +68,10 @@ class Grenade extends UseItem {
 
 class Armor extends Equipment {
 	int defense;
+	int lv;
 
 	Armor() {
+		this.lv = 1;
 		this.name = "갑옷";
 		this.defense = 100;
 		this.price = 100;
@@ -79,13 +81,16 @@ class Armor extends Equipment {
 //////===================================================================================================
 class Headpiece extends Equipment {
 	int defense;
+	int lv;
 
 	Headpiece() {
+		this.lv = 1;
 		this.name = "투구";
 		this.defense = 50;
 		this.price = 100;
 	}
 }
+
 
 //////===================================================================================================
 class 아가미 extends Equipment {
