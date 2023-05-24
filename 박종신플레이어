@@ -1,0 +1,30 @@
+package 객지프기말프로젝트통합;
+
+class Player {
+	static Monster p; // 몬스터 클래스를 전역으로 받았기 때문에 이름 말고 다른 스탯은 Player.p.으로 접근가능
+	static Armor a; // 플레이어가 갑옷객체를 받아옴
+	static Headpiece h; // 투구
+
+	static String name, style;
+
+	static int hpPotionN, mpPotionN, 수류탄N, 갑옷N, 투구N, 아가미N, 어항N, 날개N, pMoney = 100000;
+
+	static public void reinforcement() {
+		// 스킬1 스킬2 스킬3 투구 갑옷
+
+		int select = 5;
+
+		if (select == 5) {
+			if (갑옷N == 0) {
+				System.out.println("장비를 보유하고있지 않습니다.");
+			} else if (a.reinforceP > pMoney) {
+				System.out.println("돈이 부족합니다.");
+
+			} else {
+				a.lv++;
+				a.reinforceN *= a.lv;
+				a.reinforceP *= a.lv;
+			}
+		}
+	}
+}
