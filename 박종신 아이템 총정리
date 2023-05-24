@@ -76,7 +76,7 @@ class Armor extends Equipment {
 		this.name = "갑옷";
 		this.defense = 100;
 		this.price = 100;
-		this.reinforceP = 500;
+		this.reinforceP = 50;
 		this.reinforceN = 10;
 	}
 
@@ -97,7 +97,7 @@ class Headpiece extends Armor {
 		this.name = "투구";
 		this.defense = 50;
 		this.price = 100;
-		this.reinforceP = 200;
+		this.reinforceP = 20;
 		this.reinforceN = 5;
 	}
 }
