@@ -111,25 +111,25 @@ public class ShowStatus extends JFrame {
 		data[1][1] = Integer.toString(Player.p.power);
 		data[1][2] = "||||||||||||||||||||||||||||||";
 
-		if (Player.h != null && Player.a != null) {
+		if (Player.투구N != 0 && Player.갑옷N != 0) {
 			data[2][0] = "방어력";
 			data[2][1] = Integer.toString(Player.p.defense) + "(+"
 					+ Integer.toString(Player.h.defense + Player.h.reinforceN + Player.a.defense + Player.a.reinforceN)
 					+ ")";
 			data[2][2] = "||||||||||||||||||||||||||||||";
 
-		} else if (Player.h != null && Player.a == null) {
+		} else if (Player.투구N != 0 && Player.갑옷N == 0) {
 			data[2][0] = "방어력";
 			data[2][1] = Integer.toString(Player.p.defense) + "(+"
 					+ Integer.toString(Player.h.defense + Player.h.reinforceN) + ")";
 			data[2][2] = "||||||||||||||||||||||||||||||";
-		} else if (Player.h == null && Player.a != null) {
+		} else if (Player.투구N == 0 && Player.갑옷N != 0) {
 			data[2][0] = "방어력";
 			data[2][1] = Integer.toString(Player.p.defense) + "(+"
 					+ Integer.toString(Player.a.defense + Player.a.reinforceN) + ")";
 			data[2][2] = "||||||||||||||||||||||||||||||";
 		}
-		if (Player.h == null && Player.a == null) {
+		if (Player.투구N == 0 && Player.갑옷N == 0) {
 			data[2][0] = "방어력";
 			data[2][1] = Integer.toString(Player.p.defense);
 			data[2][2] = "||||||||||||||||||||||||||||||";
