@@ -1,0 +1,86 @@
+//아이템 별로 클래스를 만들어주어서 상점 클래스도 새롭게 만들었습니다.
+
+//Shop shop = new Shop();=>객체 생성 후
+//shop.selectItem();      =>객체.selectItem()을 실행시키면 구매까지 한번에 실행됩니다.
+package 객지프기말프로젝트통합;
+
+import java.util.Scanner;
+
+public class Shop {
+	private UseItem HpPotion, MpPotion, Grenade;
+	private Equipment 아가미, 날개, 어항, Headpiece, Armor;
+
+	Shop() {
+		this.HpPotion = new HpPotion();
+		this.MpPotion = new MpPotion();
+		this.Grenade = new Grenade();
+
+		this.Headpiece = new Headpiece();
+		this.Armor = new Armor();
+
+		this.날개 = new 날개();
+		this.아가미 = new 아가미();
+		this.어항 = new 어항();
+
+	}
+
+	void selectItem() {// 아이템 선택
+
+		Scanner in = new Scanner(System.in);
+		System.out.println("구매할 품목을 선택해주세요.");
+		showItemList();
+		int s = in.nextInt(), num = 1;
+		if (s == 1 || s == 2 || s == 3) {
+			System.out.println("구매 수량을 선택해 주세요.");
+			num = in.nextInt();
+		}
+		if (s == 1) {
+			purchase(HpPotion, num);// 구매
+			Player.hpPotionN += num;// 물건 넣어주기
+		} else if (s == 2) {
+			purchase(MpPotion, num);
+			Player.mpPotionN += num;
+		} else if (s == 3) {
+			purchase(Grenade, num);
+			Player.수류탄N += num;
+		} else if (s == 4) {
+			purchase(Headpiece, num);
+			Player.투구N += num;
+		} else if (s == 5) {
+			purchase(Grenade, num);
+			Player.수류탄N += num;
+		} else if (s == 6) {
+			purchase(날개, num);
+			Player.날개N += num;
+		} else if (s == 7) {
+			purchase(아가미, num);
+			Player.아가미N += num;
+		} else if (s == 8) {
+			purchase(어항, num);
+			Player.어항N += num;
+		} else
+			System.out.println("잘못된 숫자를 입력하셨습니다.");
+		new ShowInventory();
+	}
+
+	private void showItemList() {
+		System.out.println("1.HP포션: " + HpPotion.price + "G");
+		System.out.println("2.MP포션: " + MpPotion.price + "G");
+		System.out.println("3.수류탄: " + Grenade.price + "G");
+		System.out.println("4.투구: " + Headpiece.price + "G");
+		System.out.println("5.갑옷: " + Armor.price + "G");
+		System.out.println("6.날개: " + 날개.price + "G");
+		System.out.println("7.아가미: " + 아가미.price + "G");
+		System.out.println("8.어항: " + 어항.price + "G");
+	}
+
+	private void purchase(Item i, int num) {// 아이템과 구매수량
+		if ((i.price * num) > Player.pMoney)
+			System.out.println("돈이 부족합니다.");
+		else {
+			Player.pMoney -= i.price * num;
+		}
+		System.out.println("사용한 돈 : " + i.price * num + "G");
+	}
+
+}
