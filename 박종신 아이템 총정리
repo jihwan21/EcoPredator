@@ -65,32 +65,42 @@ class Grenade extends UseItem {
 
 }
 //////===================================================================================================
-
 class Armor extends Equipment {
 	int defense;
 	int lv;
+	int reinforceP;
+	int reinforceN;
 
 	Armor() {
 		this.lv = 1;
 		this.name = "갑옷";
 		this.defense = 100;
 		this.price = 100;
+		this.reinforceP = 500;
+		this.reinforceN = 10;
+	}
+
+	void use() {
+		Player.p.defense += this.defense + this.reinforceN;
+	}
+
+	void unUse() {
+		Player.p.defense -= this.defense + this.reinforceN;
 	}
 }
 
 //////===================================================================================================
-class Headpiece extends Equipment {
-	int defense;
-	int lv;
+class Headpiece extends Armor {
 
 	Headpiece() {
 		this.lv = 1;
 		this.name = "투구";
 		this.defense = 50;
 		this.price = 100;
+		this.reinforceP = 200;
+		this.reinforceN = 5;
 	}
 }
-
 
 //////===================================================================================================
 class 아가미 extends Equipment {
