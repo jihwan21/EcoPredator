@@ -111,9 +111,30 @@ public class ShowStatus extends JFrame {
 		data[1][1] = Integer.toString(Player.p.power);
 		data[1][2] = "||||||||||||||||||||||||||||||";
 
-		data[2][0] = "방어력";
-		data[2][1] = Integer.toString(Player.p.defense);
-		data[2][2] = "||||||||||||||||||||||||||||||";
+		if (Player.h != null && Player.a != null) {
+			data[2][0] = "방어력";
+			data[2][1] = Integer.toString(Player.p.defense) + "(+"
+					+ Integer.toString(Player.h.defense + Player.h.reinforceN + Player.a.defense + Player.a.reinforceN)
+					+ ")";
+			data[2][2] = "||||||||||||||||||||||||||||||";
+
+		} else if (Player.h != null && Player.a == null) {
+			data[2][0] = "방어력";
+			data[2][1] = Integer.toString(Player.p.defense) + "(+"
+					+ Integer.toString(Player.h.defense + Player.h.reinforceN) + ")";
+			data[2][2] = "||||||||||||||||||||||||||||||";
+		} else if (Player.h == null && Player.a != null) {
+			data[2][0] = "방어력";
+			data[2][1] = Integer.toString(Player.p.defense) + "(+"
+					+ Integer.toString(Player.a.defense + Player.a.reinforceN) + ")";
+			data[2][2] = "||||||||||||||||||||||||||||||";
+		}
+		if (Player.h == null && Player.a == null) {
+			data[2][0] = "방어력";
+			data[2][1] = Integer.toString(Player.p.defense);
+			data[2][2] = "||||||||||||||||||||||||||||||";
+
+		}
 
 		data[3][0] = "HP";
 		data[3][1] = Integer.toString(Player.p.hp);
@@ -150,10 +171,11 @@ public class ShowStatus extends JFrame {
 		table.getColumn("현재값").setPreferredWidth(100);
 		table.getColumn("최대값").setPreferredWidth(100);
 		table.getColumn("구분").setPreferredWidth(50);
-//Player.style + " " + Player.p.tribe + " " + Player.name,
+
 		this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		pack();
 		setSize(250, 220);
 		setVisible(true);
 	}
 }
+
