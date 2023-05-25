@@ -37,8 +37,12 @@ public class Shop extends Item {
 			purchase(MpPotion, num);
 			Player.mpPotionN += num;
 		} else if (s == 3) {
-			purchase(Grenade, num);
-			Player.수류탄N += num;
+			if (Player.수류탄N == 5 || Player.수류탄N + num > 5)
+				System.out.println("수류탄은 최대 5개까지 소지가능합니다.");
+			else {
+				purchase(Grenade, num);
+				Player.수류탄N += num;
+			}
 		} else if (s == 4 && Player.투구N == 0) {
 			purchase(Headpiece, num);
 			Player.투구N += num;
