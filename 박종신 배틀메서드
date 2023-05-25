@@ -1,4 +1,3 @@
-
 package 객지프기말프로젝트통합;
 
 import java.util.Scanner;
@@ -28,7 +27,7 @@ public class Battle {
 		}
 		for (int j = i + 1; j <= 71 + 1; j++)
 			System.out.print(blankS);
-		System.out.printf("|%d\n", m1.hpMax);
+		System.out.printf("|%d/%d\n", m1.hp, m1.hpMax);
 
 		System.out.print(m1.tribe + "공격력|");
 		for (i = 1; i <= (int) ((float) m1.attack / N * N1); i++) {
@@ -52,7 +51,7 @@ public class Battle {
 		}
 		for (int j = i + 1; j <= 71 + 1; j++)
 			System.out.print(blankS);
-		System.out.printf("|%d\n", Player.p.hpMax);
+		System.out.printf("|%d/%d\n", Player.p.hp, Player.p.hpMax);
 
 		System.out.print(Player.name + "공격력|");
 		for (i = 1; i <= (int) ((float) m2.attack / N * N1); i++) {
@@ -75,8 +74,6 @@ public class Battle {
 
 //🟰🟰🟰🟰🟰🟰🟰🟰🟰🟰🟰🟰🟰🟰🟰🟰🟰🟰🟰🟰🟰🟰🟰🟰🟰🟰🟰🟰🟰🟰🟰🟰🟰🟰🟰🟰🟰🟰🟰🟰🟰🟰🟰🟰🟰🟰🟰🟰🟰🟰🟰🟰🟰🟰🟰🟰🟰🟰🟰🟰🟰🟰🟰🟰
 	public static void battle(Monster m1) {// 배틀 메서드
-
-		m1.attack = 50;
 
 		Scanner in = new Scanner(System.in);
 		System.out.println("\n" + m1.tribe + "와의 전투를 시작합니다.\n");
@@ -229,6 +226,7 @@ public class Battle {
 					if (Player.p.exp < 0)
 						Player.p.exp = 0;
 					Player.pMoney -= m1.money;
+					break;
 				}
 
 			} else {
