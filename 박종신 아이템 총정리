@@ -1,6 +1,5 @@
 package 객지프기말프로젝트통합;
-//아이템 - 사용아이템(체력포션, 마나포션, 수류탄)
-//       - 착용장비(투구, 갑옷, 날개, 아가미, 어항)
+
 public class Item {
 	int price;
 	String name;
@@ -21,7 +20,7 @@ class HpPotion extends UseItem {
 	HpPotion() {
 		name = "HP포션";
 		price = 15;// 임의 가격
-		amount = 15;
+		amount = Player.p.hpMax / 5;// 체력의 약 1/5회복
 	}
 
 	public void use() {
@@ -54,17 +53,20 @@ class Grenade extends UseItem {
 	Grenade() {
 		name = "수류탄";
 		price = 15;
-		demage = 100;
+		demage = 10;
 	}
 
 	public int use(Monster m1) {
+		m1.hp -= demage;
 		Player.수류탄N--;
-		m1.기절상태 = 1;// 기절로 만들어줌
+		m1.attack = m1.attack * 3;
+		m1.기절상태 = 1;
 		return demage;
 	}
 
 }
 //////===================================================================================================
+
 class Armor extends Equipment {
 	int defense;
 	int lv;
