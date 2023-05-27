@@ -43,6 +43,8 @@ public class main {
 				break;
 
 			case 6:
+				Achievement ach = new Achievement();
+				ach.process();
 				break;
 
 			case 0:
