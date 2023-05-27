@@ -505,6 +505,8 @@ class Alligator_turtle extends Monster {
 
 	public int skill01() {// 몬스터 고유스킬
 		this.defense += (6 + upgradeS01);
+		int demage = 0;
+		demage += (defense);
 		this.mp -= 10;
 		return 0;
 	}
