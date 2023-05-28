@@ -7,7 +7,7 @@ public class Battle {
 		for (int k = 0; k < 1; k++)
 			System.out.println();
 	}
-	
+
 	private static void printHp(Monster m1, Monster m2) {
 		int N = 1000, N1 = 100;// 수치
 
@@ -73,8 +73,8 @@ public class Battle {
 	}
 
 //🟰🟰🟰🟰🟰🟰🟰🟰🟰🟰🟰🟰🟰🟰🟰🟰🟰🟰🟰🟰🟰🟰🟰🟰🟰🟰🟰🟰🟰🟰🟰🟰🟰🟰🟰🟰🟰🟰🟰🟰🟰🟰🟰🟰🟰🟰🟰🟰🟰🟰🟰🟰🟰🟰🟰🟰🟰🟰🟰🟰🟰🟰🟰🟰
-	public static void battle(Monster m1) {// 배틀 메서드
-		
+	public static void battle(Monster m1, Monster m2, Achievement ach) {// 배틀 메서드
+
 		Scanner in = new Scanner(System.in);
 		System.out.println("\n" + m1.tribe + "와의 전투를 시작합니다.\n");
 
@@ -83,34 +83,60 @@ public class Battle {
 		if (Player.h != null)
 			Player.h.use();
 		int select;
-		Monster p = Player.p;
+		Monster m = Player.p;
+		int attack_copy = m.attack;
+		int defense_copy = m.defense;
 		int demage = 0;
 
 		while (true) {
-			if (p.기절상태 == 0) {
+			if (m.기절상태 == 0) {
 				printHp(m1, Player.p);
-				System.out.println("<공격턴>");
-				p.skill_info();
-				System.out.println("4. 전략적 선택지 사용");
+				System.out.println("----- <공격턴> -----");
+				m.skill_info();
+				System.out.println("4. 공격 전략적 선택지 사용");
 				System.out.println("5. 가방");
 				System.out.println("6. 스탯");
+				System.out.print("선택 : ");
 				while (true) {
 					select = in.nextInt();
 					if (select == 0) {
-						demage = p.attack();
+						demage = m.attack();
 						break;
 					} else if (select == 1) {
-						demage = p.skill01();
+						demage = m.skill01();
 						break;
 					} else if (select == 2) {
-						demage = p.skill02();
+						demage = m.skill02();
 						break;
 					} else if (select == 3) {
-						demage = p.skill03();
+						demage = m.skill03();
 						break;
 					} else if (select == 4) {
-						System.out.println("전략선택지 사용");
-						continue;
+						Strategy_Attack sa = new Strategy_Attack();
+						System.out.print("선택 : ");
+						int select_num = in.nextInt();
+						m.attack = sa.Select_attack(select_num);
+						System.out.println("----- <공격턴> -----");
+						m.skill_info();
+						System.out.print("선택 : ");
+						select = in.nextInt();
+						if (select == 0) {
+							demage = m.attack();
+							m.attack = attack_copy; // 원래 공격력으로 복구
+							break;
+						} else if (select == 1) {
+							demage = m.skill01();
+							m.attack = attack_copy;
+							break;
+						} else if (select == 2) {
+							demage = m.skill02();
+							m.attack = attack_copy;
+							break;
+						} else if (select == 3) {
+							demage = m.skill03();
+							m.attack = attack_copy;
+							break;
+						}
 					} else if (select == 5) {
 						new ShowInventory();
 						continue;
@@ -137,6 +163,8 @@ public class Battle {
 					System.out.println(m1.tribe + "가 쓰러졌습니다.");
 					System.out.println(m1.money + "G를 얻었습니다.");
 					System.out.println(m1.expGive + "EXP를 얻었습니다.");
+					ach.count(m2.tribe); // 몬스터 처치 시 해당 몬스터 업적 count
+					m2.clear = 1; // 몬스터 처치 시 해당 몬스터(level, location) clear 처리
 					Player.pMoney += m1.money;
 					Player.p.exp += m1.expGive;
 					Achievement.count(m1.tribe);
@@ -151,15 +179,15 @@ public class Battle {
 					break;
 				}
 				// ===============================================플레이어의 방어와 몬스터의 공격
-				System.out.println("<방어턴>");
+				System.out.println("----- <방어턴> -----");
 				System.out.println("1. 체력 포션사용: " + Player.hpPotionN);
 				System.out.println("2. 마나 포션사용: " + Player.mpPotionN);
 				System.out.println("3. 수류탄 사용 : " + Player.수류탄N);
-				System.out.println("4. 전략적 선택지 사용");
+				System.out.println("4. 방어 전략적 선택지 사용");
 				System.out.println("5. 가방");
 				System.out.println("6. 스탯");
 				System.out.println("0. 턴 넘기기");
-
+				System.out.print("선택 : ");
 				while (true) {
 					select = in.nextInt();
 					demage = 0;
@@ -191,7 +219,58 @@ public class Battle {
 						}
 						break;
 					} else if (select == 4) {
-						System.out.println("전략적 선택지 입니다.");
+						Strategy_Defense sd = new Strategy_Defense();
+						System.out.print("선택 : ");
+						int select_num = in.nextInt();
+						m.defense = sd.Select_defense(select_num);
+						System.out.println("----- <방어턴> -----");
+						System.out.println("1. 체력 포션사용: " + Player.hpPotionN);
+						System.out.println("2. 마나 포션사용: " + Player.mpPotionN);
+						System.out.println("3. 수류탄 사용 : " + Player.수류탄N);
+						System.out.println("4. 가방");
+						System.out.println("5. 스탯");
+						System.out.println("0. 턴 넘기기");
+						System.out.print("선택 : ");
+						select = in.nextInt();
+						if (select == 1) {
+							if (Player.hpPotionN > 0) {
+								HpPotion p1 = new HpPotion();
+								p1.use();
+								break;
+							} else {
+								System.out.println("포션이 없습니다.");
+								continue;
+							}
+						} else if (select == 2) {
+							if (Player.mpPotionN > 0) {
+								MpPotion p2 = new MpPotion();
+								p2.use();
+								break;
+							} else {
+								System.out.println("포션이 없습니다.");
+								continue;
+							}
+						} else if (select == 3) {
+							if (Player.수류탄N > 0) {
+								Grenade p3 = new Grenade();
+								p3.use(m1);
+							} else {
+								System.out.println("수류탄이 없습니다.");
+								continue;
+							}
+							break;
+						} else if (select == 4) {
+							new ShowInventory();
+							continue;
+						} else if (select == 5) {
+							new ShowStatus();
+							continue;
+						} else if (select == 0) {
+							break;
+						} else {
+							System.out.println("잘못된 숫자를 입력하셨습니다.");
+							continue;
+						}
 					} else if (select == 5) {
 						new ShowInventory();
 						continue;
@@ -210,19 +289,20 @@ public class Battle {
 			else// 기절상태 1
 			{
 				System.out.println("플레이어가 기절했습니다. 아무런 행동도 할 수 없습니다.");
-				p.기절상태 = 1;
+				m.기절상태 = 1;
 			}
 			// -=-=-=-=-=-=--===================================================플레이어의 공격과
 			// 방어까지
 			if (m1.기절상태 == 0) {
 				System.out.println(m1.tribe + "가 공격합니다.");
 				demage = m1.attack();
-				if (p.defense / 10 < demage * 10) {
-					p.hp -= (demage - (p.defense) / 10);
-					System.out.println("\"" + (demage - (p.defense) / 10) + "\"" + "만큼의 피해를 입었습니다.\n");
+				if (m.defense / 10 < demage * 10) {
+					m.hp -= (demage - (m.defense) / 10);
+					System.out.println("\"" + (demage - (m.defense) / 10) + "\"" + "만큼의 피해를 입었습니다.\n");
+					m.defense = defense_copy; // 원래 방어력으로 복구
 				} else
 					System.out.printf("공격이 통하지 않았습니다.\n\n");
-				if (p.hp < 1) {
+				if (m.hp < 1) {
 					System.out.println("플레이어가 죽었습니다.");
 					Player.p.hp = Player.p.hpMax / 5; // 1/5 회복
 					Player.p.exp -= Player.p.expMax / 2;
@@ -244,5 +324,4 @@ public class Battle {
 
 		new ShowStatus();
 	}
-
 }
