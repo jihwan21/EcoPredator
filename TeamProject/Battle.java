@@ -360,7 +360,7 @@ public class Battle {
 	}
 
 	public static void 공백() {
-		String message = "";
+		String message = " \n";
 		int delay = 1500; // 1초 딜레이
 
 		for (int i = 0; i < message.length(); i++) {
