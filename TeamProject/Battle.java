@@ -1,6 +1,7 @@
 package TeamProject;
 
 import java.util.Scanner;
+import java.util.Random;
 
 public class Battle {
 	public static void brank() {
