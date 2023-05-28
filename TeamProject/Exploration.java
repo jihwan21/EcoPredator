@@ -613,6 +613,7 @@ public class Exploration {
 			System.out.println("??? 영역에 들어왔습니다.");
 			Human m1 = new Human();
 			Battle.battleEnding(m1);
+			System.exit(0);
 			break;
 		}
 		}
