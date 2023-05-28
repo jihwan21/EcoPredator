@@ -88,7 +88,6 @@ public class Battle {
 		while (true) {
 			if (Player.p.기절상태 == 0) {
 				printHp(m1, Player.p);
-
 				System.out.println("<공격턴>");
 				Player.p.skill_info();
 				System.out.println("4. 전략적 선택지 사용");
@@ -216,9 +215,11 @@ public class Battle {
 			if (m1.기절상태 == 0) {
 				System.out.println(m1.tribe + "가 공격합니다.");
 				demage = m1.attack();
-				if (Player.p.defense < demage)
-					Player.p.hp -= (demage - Player.p.defense);
-				System.out.println("\"" + (demage - Player.p.defense) + "\"" + "만큼의 피해를 입었습니다.\n");
+				if (Player.p.defense < demage * 10) {
+					Player.p.hp -= (demage - (Player.p.defense) / 10);
+					System.out.println("\"" + (demage - (Player.p.defense) / 10) + "\"" + "만큼의 피해를 입었습니다.\n");
+				} else
+					System.out.printf("공격이 통하지 않았습니다.\n\n");
 				if (Player.p.hp < 1) {
 					System.out.println("플레이어가 죽었습니다.");
 					Player.p.hp = Player.p.hpMax / 5; // 1/5 회복
@@ -238,6 +239,7 @@ public class Battle {
 			Player.a.unUse();
 		if (Player.h != null)
 			Player.h.unUse();
+
 		new ShowStatus();
 	}
 
