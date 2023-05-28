@@ -10,68 +10,92 @@ class Player {
 
 	static String name, style;
 
-	static int hpPotionN, mpPotionN, 수류탄N, 갑옷N, 투구N, pMoney = 100000;
-	
-	static int 아가미N = 0;
-	static int 어항N = 0;
-	static int 날개N = 0;
+	static int hpPotionN, mpPotionN, 수류탄N, 갑옷N, 투구N, 아가미N, 어항N, 날개N, pMoney = 100000000;
 
-	
 	static public void reinforcement() {
 		Scanner in = new Scanner(System.in);
-		int select = in.nextInt();
 
-		Random random = new Random();
-		double probability = 1.0;
-		int randomNumber = random.nextInt(100);
+		while (true) {
+			Random random = new Random();
+			double probability = 1.0;
+			int randomNumber = random.nextInt(100);
+			if (h != null)
+				System.out.printf("1. 투구 : %dG\n", h.reinforceP);
+			if (a != null)
+				System.out.printf("2. 갑옷 : %dG\n", a.reinforceP);
+			System.out.println("3. 스킬강화");
+			System.out.println("0. 강화소 나가기");
+			int select = in.nextInt();
 
-		if (select == 1) {
-			if (투구N == 0) {
-				System.out.println("장비를 보유하고 있지 않습니다.");
-			} else if (a.reinforceP > pMoney) {
-				System.out.println("돈이 부족합니다.");
+			if (select == 1) {
+				if (투구N == 0) {
+					System.out.println("장비를 보유하고 있지 않습니다.");
+				} else if (h.reinforceP > pMoney) {
+					System.out.println("돈이 부족합니다.");
 
-			} else {
-				pMoney -= h.reinforceP;
-				probability -= 0.05 * h.lv;
-				if (randomNumber < probability * 100) {
-					h.lv++;
-					h.reinforceN += h.lv * 20;
-					h.reinforceP += h.lv * 100;
-					System.out.println("강화성공!");
-					System.out.println("장비레벨: " + h.lv);
-					System.out.println("장비방어력: " + (h.defense + h.reinforceN));
-					System.out.println("사용한 돈: " + h.reinforceP);
 				} else {
-					System.out.println("강화실패");
-					투구N--;
+					pMoney -= h.reinforceP;
+					probability -= 0.05 * h.lv;
+					if (randomNumber < probability * 100) {
+						h.lv++;
+						h.reinforceN += h.lv * 20;
+						h.reinforceP += h.lv * 100;
+						System.out.printf("강화성공!\n%dLv => %dLv\n", h.lv - 1, h.lv);
+						System.out.printf("장비방어력: +%d\n\n", h.lv * 20);
+
+					} else {
+						System.out.println("강화실패");
+						;
+					}
 				}
 			}
-		}
 
-		if (select == 2) {
-			if (갑옷N == 0) {
-				System.out.println("장비를 보유하고 있지 않습니다.");
-			} else if (a.reinforceP > pMoney) {
-				System.out.println("돈이 부족합니다.");
+			if (select == 2) {
+				if (갑옷N == 0) {
+					System.out.println("장비를 보유하고 있지 않습니다.");
+				} else if (a.reinforceP > pMoney) {
+					System.out.println("돈이 부족합니다.");
 
-			} else {
-				pMoney -= a.reinforceP;
-				probability -= 0.05 * a.lv;
-				if (randomNumber < probability * 100) {
-					a.lv++;
-					a.reinforceN += a.lv * 20;
-					a.reinforceP += a.lv * 100;
-					System.out.println("강화성공!");
-					System.out.println("장비레벨: " + a.lv);
-					System.out.println("장비방어력: " + (a.defense + a.reinforceN));
-					System.out.println("사용한 돈: " + a.reinforceP);
 				} else {
-					System.out.println("강화실패");
-					갑옷N--;
+					pMoney -= a.reinforceP;
+					probability -= 0.05 * a.lv;
+					if (randomNumber < probability * 100) {
+						a.lv++;
+						a.reinforceN += a.lv * 20;
+						a.reinforceP += a.lv * 100;
+						System.out.printf("강화성공!\n%dLv => %dLv\n", a.lv - 1, a.lv);
+						System.out.printf("장비방어력: +%d\n\n", a.lv * 20);
+
+					} else {
+						System.out.println("강화실패");
+						;
+					}
+
 				}
+			}
+
+			if (select == 3) {
+				Player.p.skill_info();
+				int s = in.nextInt();
+				int up = 1;
+				System.out.print("강화수치를 입력해주세요.");
+				while (true) {
+					up = in.nextInt();
+					if (up > 0)
+						break;
+				}
+				pMoney -= up;
+				if (s == 1)
+					Player.p.upgradeS01 += up / 10;
+				else if (s == 2)
+					Player.p.upgradeS02 += up / 10;
+				else if (s == 3)
+					Player.p.upgradeS03 += up / 10;
 
 			}
+
+			if (select == 0)
+				break;
 		}
 	}
 }
