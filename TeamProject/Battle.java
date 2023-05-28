@@ -1,6 +1,5 @@
 package TeamProject;
 
-import java.util.Random;
 import java.util.Scanner;
 
 public class Battle {
@@ -75,7 +74,7 @@ public class Battle {
 
 //🟰🟰🟰🟰🟰🟰🟰🟰🟰🟰🟰🟰🟰🟰🟰🟰🟰🟰🟰🟰🟰🟰🟰🟰🟰🟰🟰🟰🟰🟰🟰🟰🟰🟰🟰🟰🟰🟰🟰🟰🟰🟰🟰🟰🟰🟰🟰🟰🟰🟰🟰🟰🟰🟰🟰🟰🟰🟰🟰🟰🟰🟰🟰🟰
 	public static void battle(Monster m1, Monster m2, Achievement ach) {// 배틀 메서드
-		Random random = new Random();
+
 		Scanner in = new Scanner(System.in);
 		System.out.println("\n" + m1.tribe + "와의 전투를 시작합니다.\n");
 
@@ -94,11 +93,10 @@ public class Battle {
 				printHp(m1, Player.p);
 				System.out.println("----- <공격턴> -----");
 				m.skill_info();
-				System.out.println("4. 공격 전략적 선택지 사용(25% 확률로 개방)");
+				System.out.println("4. 공격 전략적 선택지 사용");
 				System.out.println("5. 가방");
 				System.out.println("6. 스탯");
 				System.out.print("선택 : ");
-				int randomNumber = random.nextInt(100);
 				while (true) {
 					select = in.nextInt();
 					if (select == 0) {
@@ -114,52 +112,30 @@ public class Battle {
 						demage = m.skill03();
 						break;
 					} else if (select == 4) {
-						if (randomNumber < 25) {
-							System.out.println("전략적 선택지 개방에 성공하였습니다!!!");
-							Strategy_Attack sa = new Strategy_Attack();
-							System.out.print("선택 : ");
-							int select_num = in.nextInt();
-							m.attack = sa.Select_attack(select_num);
-							System.out.println("----- <공격턴> -----");
-							m.skill_info();
-							System.out.print("선택 : ");
-							select = in.nextInt();
-							if (select == 0) {
-								demage = m.attack();
-								m.attack = attack_copy; // 원래 공격력으로 복구
-								break;
-							} else if (select == 1) {
-								demage = m.skill01();
-								m.attack = attack_copy;
-								break;
-							} else if (select == 2) {
-								demage = m.skill02();
-								m.attack = attack_copy;
-								break;
-							} else if (select == 3) {
-								demage = m.skill03();
-								m.attack = attack_copy;
-								break;
-							}
-						} else {
-							System.out.println("전략적 선택지 개방에 실패하였습니다...");
-							System.out.println("----- <공격턴> -----");
-							m.skill_info();
-							System.out.print("선택 : ");
-							select = in.nextInt();
-							if (select == 0) {
-								demage = m.attack();
-								break;
-							} else if (select == 1) {
-								demage = m.skill01();
-								break;
-							} else if (select == 2) {
-								demage = m.skill02();
-								break;
-							} else if (select == 3) {
-								demage = m.skill03();
-								break;
-							}
+						Strategy_Attack sa = new Strategy_Attack();
+						System.out.print("선택 : ");
+						int select_num = in.nextInt();
+						m.attack = sa.Select_attack(select_num);
+						System.out.println("----- <공격턴> -----");
+						m.skill_info();
+						System.out.print("선택 : ");
+						select = in.nextInt();
+						if (select == 0) {
+							demage = m.attack();
+							m.attack = attack_copy; // 원래 공격력으로 복구
+							break;
+						} else if (select == 1) {
+							demage = m.skill01();
+							m.attack = attack_copy;
+							break;
+						} else if (select == 2) {
+							demage = m.skill02();
+							m.attack = attack_copy;
+							break;
+						} else if (select == 3) {
+							demage = m.skill03();
+							m.attack = attack_copy;
+							break;
 						}
 					} else if (select == 5) {
 						new ShowInventory();
@@ -199,6 +175,7 @@ public class Battle {
 						Player.p.attack += Player.p.level * 10;
 						Player.p.defense += Player.p.level * 5;
 						Player.p.hpMax += 100;
+						Player.p.exp = 0;
 					}
 					break;
 				}
@@ -207,7 +184,7 @@ public class Battle {
 				System.out.println("1. 체력 포션사용: " + Player.hpPotionN);
 				System.out.println("2. 마나 포션사용: " + Player.mpPotionN);
 				System.out.println("3. 수류탄 사용 : " + Player.수류탄N);
-				System.out.println("4. 방어 전략적 선택지 사용(25% 확률로 개방)");
+				System.out.println("4. 방어 전략적 선택지 사용");
 				System.out.println("5. 가방");
 				System.out.println("6. 스탯");
 				System.out.println("0. 턴 넘기기");
@@ -243,63 +220,57 @@ public class Battle {
 						}
 						break;
 					} else if (select == 4) {
-						if (randomNumber < 25) {
-							System.out.println("전략적 선택지 개방에 성공하였습니다!!!");
-							Strategy_Defense sd = new Strategy_Defense();
-							System.out.print("선택 : ");
-							int select_num = in.nextInt();
-							m.defense = sd.Select_defense(select_num);
-							break;
-						} else {
-							System.out.println("전략적 선택지 개방에 실패하였습니다...");
-							System.out.println("----- <방어턴> -----");
-							System.out.println("1. 체력 포션사용: " + Player.hpPotionN);
-							System.out.println("2. 마나 포션사용: " + Player.mpPotionN);
-							System.out.println("3. 수류탄 사용 : " + Player.수류탄N);
-							System.out.println("4. 가방");
-							System.out.println("5. 스탯");
-							System.out.println("0. 턴 넘기기");
-							System.out.print("선택 : ");
-							select = in.nextInt();
-							if (select == 1) {
-								if (Player.hpPotionN > 0) {
-									HpPotion p1 = new HpPotion();
-									p1.use();
-									break;
-								} else {
-									System.out.println("포션이 없습니다.");
-									continue;
-								}
-							} else if (select == 2) {
-								if (Player.mpPotionN > 0) {
-									MpPotion p2 = new MpPotion();
-									p2.use();
-									break;
-								} else {
-									System.out.println("포션이 없습니다.");
-									continue;
-								}
-							} else if (select == 3) {
-								if (Player.수류탄N > 0) {
-									Grenade p3 = new Grenade();
-									p3.use(m1);
-								} else {
-									System.out.println("수류탄이 없습니다.");
-									continue;
-								}
-								break;
-							} else if (select == 4) {
-								new ShowInventory();
-								continue;
-							} else if (select == 5) {
-								new ShowStatus();
-								continue;
-							} else if (select == 0) {
+						Strategy_Defense sd = new Strategy_Defense();
+						System.out.print("선택 : ");
+						int select_num = in.nextInt();
+						m.defense = sd.Select_defense(select_num);
+						System.out.println("----- <방어턴> -----");
+						System.out.println("1. 체력 포션사용: " + Player.hpPotionN);
+						System.out.println("2. 마나 포션사용: " + Player.mpPotionN);
+						System.out.println("3. 수류탄 사용 : " + Player.수류탄N);
+						System.out.println("4. 가방");
+						System.out.println("5. 스탯");
+						System.out.println("0. 턴 넘기기");
+						System.out.print("선택 : ");
+						select = in.nextInt();
+						if (select == 1) {
+							if (Player.hpPotionN > 0) {
+								HpPotion p1 = new HpPotion();
+								p1.use();
 								break;
 							} else {
-								System.out.println("잘못된 숫자를 입력하셨습니다.");
+								System.out.println("포션이 없습니다.");
 								continue;
 							}
+						} else if (select == 2) {
+							if (Player.mpPotionN > 0) {
+								MpPotion p2 = new MpPotion();
+								p2.use();
+								break;
+							} else {
+								System.out.println("포션이 없습니다.");
+								continue;
+							}
+						} else if (select == 3) {
+							if (Player.수류탄N > 0) {
+								Grenade p3 = new Grenade();
+								p3.use(m1);
+							} else {
+								System.out.println("수류탄이 없습니다.");
+								continue;
+							}
+							break;
+						} else if (select == 4) {
+							new ShowInventory();
+							continue;
+						} else if (select == 5) {
+							new ShowStatus();
+							continue;
+						} else if (select == 0) {
+							break;
+						} else {
+							System.out.println("잘못된 숫자를 입력하셨습니다.");
+							continue;
 						}
 					} else if (select == 5) {
 						new ShowInventory();
@@ -353,7 +324,6 @@ public class Battle {
 			Player.h.unUse();
 
 		new ShowStatus();
-
 	}
 
 	public static void end1() {
@@ -390,7 +360,7 @@ public class Battle {
 	}
 
 	public static void 공백() {
-		String message = " ";
+		String message = "";
 		int delay = 1500; // 1초 딜레이
 
 		for (int i = 0; i < message.length(); i++) {
