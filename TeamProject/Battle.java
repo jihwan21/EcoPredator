@@ -122,9 +122,9 @@ public class Battle {
 					}
 				} // 공격턴 while끝
 					// ======================================================데미지 적용
-				if (m1.defense < demage) {
-					m1.hp -= (demage - m1.defense);
-					System.out.println("\"" + (demage - m1.defense) + "\"" + "만큼의 피해를 입혔습니다.");
+				if (m1.defense/10 < demage) {
+					m1.hp -= (demage - m1.defense/10);
+					System.out.println("\"" + (demage - m1.defense/10) + "\"" + "만큼의 피해를 입혔습니다.");
 					brank();
 				} else {
 					System.out.println("공격이 통하지 않았습니다.");
@@ -215,7 +215,7 @@ public class Battle {
 			if (m1.기절상태 == 0) {
 				System.out.println(m1.tribe + "가 공격합니다.");
 				demage = m1.attack();
-				if (Player.p.defense < demage * 10) {
+				if (Player.p.defense/10 < demage * 10) {
 					Player.p.hp -= (demage - (Player.p.defense) / 10);
 					System.out.println("\"" + (demage - (Player.p.defense) / 10) + "\"" + "만큼의 피해를 입었습니다.\n");
 				} else
