@@ -5,6 +5,7 @@ import java.util.Scanner;
 class Shop extends Item {
 	private UseItem HpPotion, MpPotion, Grenade;
 	private Equipment 아가미, 날개, 어항, Headpiece, Armor;
+	private Gaho 가호;
 
 	Shop() {
 		this.HpPotion = new HpPotion();
@@ -17,6 +18,8 @@ class Shop extends Item {
 		this.날개 = new 날개();
 		this.아가미 = new 아가미();
 		this.어항 = new 어항();
+
+		this.가호 = new Gaho();
 
 	}
 
@@ -53,13 +56,16 @@ class Shop extends Item {
 			Player.a = new Armor();
 		} else if (s == 6 && Player.날개N == 0) {
 			purchase(날개, num);
-			Player.날개N += num;
+			Player.날개N += num * 10;
 		} else if (s == 7 && Player.아가미N == 0) {
 			purchase(아가미, num);
-			Player.아가미N += num;
+			Player.아가미N += num * 10;
 		} else if (s == 8 && Player.어항N == 0) {
 			purchase(어항, num);
-			Player.어항N += num;
+			Player.어항N += num * 10;
+		} else if (s == 9) {
+			purchase(가호, num);
+			가호.use();
 		} else
 			System.out.println("상점에서 나갑니다.");
 		new ShowInventory();
@@ -74,6 +80,8 @@ class Shop extends Item {
 		System.out.println("6.날개: " + 날개.price + "G");
 		System.out.println("7.아가미: " + 아가미.price + "G");
 		System.out.println("8.어항: " + 어항.price + "G");
+		System.out.println("9.가호: " + 가호.price + "G");
+		System.out.println("0.상점 나가기");
 	}
 
 	private void purchase(Item i, int num) {// 아이템과 구매수량
@@ -83,6 +91,7 @@ class Shop extends Item {
 			Player.pMoney -= i.price * num;
 		}
 		System.out.println("사용한 돈 : " + i.price * num + "G");
+		System.out.println(i.name + "구매완료\n");
 	}
 
 }
