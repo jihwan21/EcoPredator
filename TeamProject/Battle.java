@@ -324,4 +324,76 @@ public class Battle {
 
 		new ShowStatus();
 	}
+
+	public static void end1() {
+		String message = "인간과 눈이 마주쳤습니다....\n" + "인간이 공격합니다.\n";
+		int delay = 100; // 1초 딜레이
+
+		for (int i = 0; i < message.length(); i++) {
+			System.out.print(message.charAt(i));
+
+			try {
+				Thread.sleep(delay);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+
+	public static void end2() {
+		String message = "서식지가 파괴되었습니다....      " + "\n종족의 개체수가 빠르게 감소합니다.              "
+				+ "\n대기오염으로 인해 더이상 이곳에서 숨을 쉴 수 없습니다...              " + "\n플레이어가 죽었습니다.          "
+				+ "\n해당 종이 멸종하여 더이상 부활할 수 없습니다.        " + "\n.............                            "
+				+ "\n게임이 종료됩니다.\n";
+		int delay = 100; // 1초 딜레이
+
+		for (int i = 0; i < message.length(); i++) {
+			System.out.print(message.charAt(i));
+
+			try {
+				Thread.sleep(delay);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+
+	public static void 공백() {
+		String message = " ";
+		int delay = 1500; // 1초 딜레이
+
+		for (int i = 0; i < message.length(); i++) {
+			System.out.print(message.charAt(i));
+
+			try {
+				Thread.sleep(delay);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+
+	static void battleEnding(Human m1) {
+		Scanner in = new Scanner(System.in);
+		Print.printBar();
+		ImageOutputExample.사람눈();
+
+		System.out.print("Enter를 누르세요.");
+		String n = in.nextLine();
+
+		end1();
+		공백();
+		ImageOutputExample.환경파괴();
+		공백();
+		ImageOutputExample.공장연기();
+
+		System.out.print("Enter를 누르세요.");
+		n = in.nextLine();
+		end2();
+
+		System.out.println("전체 플레이 타임: " + Time.allTime);
+		Print.printBar();
+		new ShowStatus();
+		new ShowInventory();
+	}
 }
