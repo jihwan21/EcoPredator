@@ -12,7 +12,7 @@ public class Exploration {
 // 영역 선택 매서드------------------------------------------`----------
 	public int area_choice() {
 		Scanner in = new Scanner(System.in);
-		System.out.println("진입 가능 영역");
+		System.out.println("----- <진입 가능 영역> -----");
 		if (Player.어항N != 0) {
 			System.out.println("1. 지상");
 		} else {
@@ -28,7 +28,8 @@ public class Exploration {
 		} else {
 			System.out.println("3. 공중(선택 불가능)");
 		}
-		System.out.print("진입할 영역을 선택하세요.");
+		System.out.println();
+		System.out.print("진입할 영역을 선택하세요 : ");
 
 		int area = in.nextInt();
 		return area;
@@ -37,7 +38,7 @@ public class Exploration {
 // 영역 선택 매서드(서울만 해당)----------------------------------------------------
 	public int area_choice2() {
 		Scanner in = new Scanner(System.in);
-		System.out.println("진입 가능 영역");
+		System.out.println("----- <진입 가능 영역> -----");
 		System.out.println("1. 지상");
 		if (Player.아가미N != 0) {
 			System.out.println("2. 수중");
@@ -49,18 +50,18 @@ public class Exploration {
 		} else {
 			System.out.println("3. 공중(선택 불가능)");
 		}
-		System.out.print("진입할 영역을 선택하세요.");
-
+		System.out.print("진입할 영역을 선택하세요 : ");
 		int area = in.nextInt();
+		System.out.println();
 		return area;
 	}
 
 // 스테이지 선택 매서드1----------------------------------------------------
 	public int stage_choice(String a) {
 		Scanner in = new Scanner(System.in);
-		System.out.println("스테이지 선택");
+		System.out.println("----- <스테이지 선택> -----");
 		System.out.println("1. " + a);
-		System.out.print("입장할 스테이지를 선택하세요. ");
+		System.out.print("입장할 스테이지를 선택하세요 : ");
 		int stage = in.nextInt();
 		return stage;
 	}
@@ -68,11 +69,11 @@ public class Exploration {
 // 스테이지 선택 매서드1----------------------------------------------------
 	public int stage_choice(String a, String b, String c) {
 		Scanner in = new Scanner(System.in);
-		System.out.println("스테이지 선택");
+		System.out.println("----- <스테이지 선택> -----");
 		System.out.println("1. " + a);
 		System.out.println("2. " + b);
 		System.out.println("3. " + c);
-		System.out.print("입장할 스테이지를 선택하세요. ");
+		System.out.print("입장할 스테이지를 선택하세요 : ");
 		int stage = in.nextInt();
 		return stage;
 	}
@@ -80,13 +81,13 @@ public class Exploration {
 // 스테이지 선택 매서드2----------------------------------------------------
 	public int stage_choice(String a, String b, String c, String d, String e) {
 		Scanner in = new Scanner(System.in);
-		System.out.println("스테이지 선택");
+		System.out.println("----- <스테이지 선택> -----");
 		System.out.println("1. " + a);
 		System.out.println("2. " + b);
 		System.out.println("3. " + c);
 		System.out.println("4. " + d);
 		System.out.println("5. " + e);
-		System.out.print("입장할 스테이지를 선택하세요. ");
+		System.out.print("입장할 스테이지를 선택하세요 : ");
 		int stage = in.nextInt();
 		return stage;
 	}
@@ -121,7 +122,7 @@ public class Exploration {
 		Scanner in = new Scanner(System.in);
 		// 지역 선택 -----------------------------------------------------
 
-		System.out.println("탐험 지역 ");
+		System.out.println("----- <탐험 지역> -----");
 		System.out.println("1. 서울");
 		// 서울 육,해,공 모든 스테이지 클리어 시 강원도, 충청도 탐험 가능
 		if (judgment_clear(Achievement.Mosquito, Achievement.Spider, Achievement.Mouse, Achievement.Cat,
@@ -170,6 +171,7 @@ public class Exploration {
 		switch (location) {
 		case 1: {
 			System.out.println("서울 지역을 선택했습니다.");
+			System.out.println();
 			area = area_choice2();
 			if (area == 1) {
 				System.out.println("국민대 뒤 북한산(지상) 영역에 들어왔습니다.");
@@ -259,7 +261,8 @@ public class Exploration {
 		}
 
 		case 2: {
-			System.out.println("강원도 지역을 선택했습니다.");
+			System.out.println(">> 강원도 지역을 선택했습니다.");
+			System.out.println();
 			area = area_choice();
 			if (area == 1) {
 				System.out.println("설악산(지상) 영역에 들어왔습니다.");
@@ -335,6 +338,7 @@ public class Exploration {
 
 		case 3: {
 			System.out.println("충청도 지역을 선택했습니다.");
+			System.out.println();
 			area = area_choice();
 			if (area == 1) {
 				System.out.println("진천선수촌 뒤 무이산(지상) 영역에 들어왔습니다.");
@@ -410,6 +414,7 @@ public class Exploration {
 
 		case 4: {
 			System.out.println("전라도 지역을 선택했습니다.");
+			System.out.println();
 			area = area_choice();
 			if (area == 1) {
 				System.out.println("전주 한옥마을(지상) 영역에 들어왔습니다.");
@@ -484,6 +489,7 @@ public class Exploration {
 		}
 		case 5: {
 			System.out.println("경상도 지역을 선택했습니다.");
+			System.out.println();
 			area = area_choice();
 			if (area == 1) {
 				System.out.println("지리산(지상) 영역에 들어왔습니다.");
@@ -559,6 +565,7 @@ public class Exploration {
 
 		case 6: {
 			System.out.println("제주도 지역을 선택했습니다.");
+			System.out.println();
 			area = area_choice();
 			if (area == 1) {
 				System.out.println("한라산(지상) 영역에 들어왔습니다.");
