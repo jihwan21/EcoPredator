@@ -85,10 +85,9 @@ class Mosquito extends Monster {
 	public int skill01() {// 몬스터 고유스킬 흡혈공격
 		int attack_upgrade = attack + upgradeS01;
 		this.mp -= 10;
+		this.hp += attack_upgrade / 2; // 입힌피해만큼 회복
 		if (this.hp > this.hpMax)
 			this.hp = this.hpMax;
-		else
-			this.hp += attack_upgrade / 2;// 입힌피해만큼 회복
 		return attack_upgrade;// 데미지 리턴
 	}
 }
