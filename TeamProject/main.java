@@ -11,7 +11,39 @@ public class main {
 		Scanner in = new Scanner(System.in);
 
 		// 캐릭터 생성 및 선택
-		Player.p = new Mosquito(3, 1);// ==============================================================================전투를
+		System.out.println("초기 캐릭터");
+		System.out.println("1. 모기");
+		System.out.println("2. 하루살이");
+		System.out.println("3. 바퀴벌레");
+		System.out.println("4. 나비");
+		System.out.println("5. 꿀벌");
+		System.out.print("원하는 초기 캐릭터를 선택하세요. : ");
+		int char_choice = in.nextInt();
+		System.out.println("");
+		
+		if(char_choice == 1) {
+			System.out.println("모기를 선택했습니다.");
+			Player.p = new Mosquito(3,1);
+		}
+		else if(char_choice == 2) {
+			System.out.println("하루살이를 선택했습니다.");
+			Player.p = new Mayfly(3,1);
+		}
+		else if(char_choice == 3) {
+			System.out.println("바퀴벌레를 선택했습니다.");
+			Player.p = new Roach(3,1);
+		}
+		else if(char_choice == 4) {
+			System.out.println("나비를 선택했습니다.");
+			Player.p = new Butterfly(3,1);
+		}
+		else if(char_choice == 5) {
+			System.out.println("꿀벌을 선택했습니다.");
+			Player.p = new Honeybee(3,1);
+		}
+		
+		
+		//Player.p = new Mosquito(3, 1);// ==============================================================================전투를
 										// 위해 임의로 3레벨 모기로 플레이어 설정
 		// 게임 메뉴 루프
 
