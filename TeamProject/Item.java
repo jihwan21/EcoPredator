@@ -15,6 +15,29 @@ class UseItem extends Item {
 	int amount;// 힐량
 }
 
+class Gaho extends Item {
+	int amount;
+
+	Gaho() {
+		this.name = "가호";
+		this.price = 1000000;
+		this.amount = 2100000000;
+	}
+
+	public void use() {
+		Player.p.attack = amount;
+		Player.p.defense = amount;
+		Player.p.hpMax = amount;
+		Player.pMoney = 1000;
+		Player.style = "가호를 받는";
+		Print.printBar();
+		System.out.println("가호가 내려 옵니다.");
+		System.out.println("당신은 무지무지 쎄졌습니다.");
+		System.out.println("당신의 칭호가 \"가호를 받는\"으로 변경되었습니다.");
+
+	}
+}
+
 //////===================================================================================================
 class HpPotion extends UseItem {
 	HpPotion() {
