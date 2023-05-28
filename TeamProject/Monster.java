@@ -36,20 +36,21 @@ class Monster extends Time {
 	}
 
 	int current_power() { // 현재 time에 맞는 power return > 전투 공격력 산출 시 활용
+		int power_copy = power;
 		if (super.current_time() <= 6) { // time이 낮인 경우
 			if (Nocturnality == 0) { // 낮이면서 주행성 동물
-				power *= 1.1;
+				power_copy = (int) (power_copy * 1.1);
 			} else if (Nocturnality == 1) { // 낮이면서 야행성 동물
-				power *= 0.9;
+				power_copy = (int) (power_copy * 0.9);
 			}
 		} else if (super.current_time() > 6) { // time이 밤인 경우
 			if (Nocturnality == 0) { // 밤이면서 주행성 동물
-				power *= 0.9;
+				power_copy = (int) (power_copy * 0.9);
 			} else if (Nocturnality == 1) { // 밤이면서 야행성 동물
-				power *= 1.1;
+				power_copy = (int) (power_copy * 1.1);
 			}
 		}
-		return power;
+		return power_copy;
 	}
 }
 
@@ -2228,5 +2229,9 @@ class Human extends Monster {
 	int attack() {
 		attack = current_power();
 		return power;
+	}
+
+	void skill_info() {
+		System.out.println("0. 멸종");
 	}
 }
