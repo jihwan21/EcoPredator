@@ -426,5 +426,8 @@ public class Battle {
 		Print.printBar();
 		new ShowStatus();
 		new ShowInventory();
+		공백();
+
+		System.exit(0);
 	}
 }
