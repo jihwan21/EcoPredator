@@ -156,7 +156,7 @@ public class Achievement {
 
 	// 현재 업적 현황 출력
 	void print_achievement() {
-		System.out.println("----- <몬스터 처치 업적> -----");
+		System.out.println("----- <몬스터 처치 업적 달성도> -----");
 		for (int k = 0; k < 51; k++) {
 			System.out.printf("%d. %s : %d/10\n", k, classList[k].m.tribe, classList[k].m.count);
 		}
