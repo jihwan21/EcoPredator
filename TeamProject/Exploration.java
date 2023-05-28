@@ -611,9 +611,8 @@ public class Exploration {
 		case 7: {
 			System.out.println("??? 지역에 입장했습니다.");
 			System.out.println("??? 영역에 들어왔습니다.");
-			System.out.println("인간과 눈이 마주쳤습니다.");
-			Monster m1 = new Human();
-			Battle.battle(m1, Achievement.Human, ach);
+			Human m1 = new Human();
+			Battle.battleEnding(m1);
 			break;
 		}
 		}
