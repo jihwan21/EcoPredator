@@ -1,18 +1,19 @@
 package TeamProject;
 
-class Monster {
+class Monster extends Time {
 	String tribe;
 	int level, power, defense, money, hp, hpMax, mp, mpMax, exp;
 	// 체력/최대체력, 마나/최대마나
-	int buff, debuff;
 	int upgradeS01, upgradeS02, upgradeS03;
 	int location;
 	int attack;
 	int expMax = 100;
 	int expGive = 10;
-
+	int clear = 0; // 0이면 한 번도 잡지 않은 상태, 1이면 한 번 이상 잡은 상태
+	int count = 0; // 업적 처치 횟수 카운트
+	int Nocturnality; // 1 : 야행성, 0 : 주행성
 	int 기절상태;
-	
+
 	// 몬스터 스킬 정보
 	void skill_info() {
 		;
@@ -34,27 +35,40 @@ class Monster {
 		return attack;
 	}
 
-	public void printM() { // 그림}
+	int current_power() { // 현재 time에 맞는 power return > 전투 공격력 산출 시 활용
+		if (super.current_time() <= 6) { // time이 낮인 경우
+			if (Nocturnality == 0) { // 낮이면서 주행성 동물
+				power *= 1.1;
+			} else if (Nocturnality == 1) { // 낮이면서 야행성 동물
+				power *= 0.9;
+			}
+		} else if (super.current_time() > 6) { // time이 밤인 경우
+			if (Nocturnality == 0) { // 밤이면서 주행성 동물
+				power *= 0.9;
+			} else if (Nocturnality == 1) { // 밤이면서 야행성 동물
+				power *= 1.1;
+			}
+		}
+		return power;
 	}
 }
 
 // location: 지역 (1: 서울, 2: 강원도, 3: 충청도, 4: 전라도, 5: 경상도, 6: 제주도)
-// 기본 능력 Regenerate response: 1,2 지역 기준 3,4 = 기준 * 10, 5,6 * 100
+// 기본 능력치: 1,2 지역 기준 3,4 = 기준 * 10, 5,6 * 100
 class Mosquito extends Monster {
 	Mosquito(int level, int location) {
 		this.tribe = "모기";
+		this.Nocturnality = 1;
 		this.level = level;
 		this.power = 10 * level * location;
 		this.defense = 5 * level * location;
 		this.money = 10 * location;
 		this.hp = this.hpMax = 100 * level * location;
 		this.mp = this.mpMax = 100;
-		this.buff = 0;
-		this.debuff = 0;
 		this.expMax = 50 * level * location;
 		this.expGive = 10;
 		this.upgradeS01 = 0;
-		this.attack = (power + buff + debuff);
+		this.attack = power;
 	}
 
 	// 스킬 리스트
@@ -64,10 +78,12 @@ class Mosquito extends Monster {
 	}
 
 	int attack() {
+		attack = current_power();
 		return attack;
 	}
 
 	public int skill01() {// 몬스터 고유스킬 흡혈공격
+		attack = current_power();
 		int attack_upgrade = attack + upgradeS01;
 		this.mp -= 10;
 		if (this.hp > this.hpMax)
@@ -76,33 +92,28 @@ class Mosquito extends Monster {
 			this.hp += attack_upgrade / 2;// 입힌피해만큼 회복
 		return attack_upgrade;// 데미지 리턴
 	}
-
-	public void printM() {
-		;
-	}
 }
 
 // 하루살이 클래스
 class Mayfly extends Monster {
 	Mayfly(int level, int location) {
 		this.tribe = "하루살이";
+		this.Nocturnality = 1;
 		this.level = level;
 		this.power = 10 * level * location;
 		this.defense = 10 * level * location;
 		this.money = 10 * location;
 		this.hp = this.hpMax = 100 * level * location;
 		this.mp = this.mpMax = 100;
-		this.buff = 0;
-		this.debuff = 0;
 		this.expMax = 50 * level * location;
 		this.expGive = 10;
 		this.upgradeS01 = 0;
-		this.attack = (power + buff + debuff);
-
+		this.attack = power;
 	}
 
 	// 일반 공격
 	int attack() {
+		attack = current_power();
 		return attack;
 	}
 
@@ -112,6 +123,7 @@ class Mayfly extends Monster {
 	}
 
 	public int skill01() {// 몬스터 고유스킬 분신술
+		attack = current_power();
 		int attack_upgrade = (2 * attack) + upgradeS01;
 		this.mp -= 10;
 		return attack_upgrade;
@@ -122,22 +134,22 @@ class Mayfly extends Monster {
 class Roach extends Monster {
 	Roach(int level, int location) {
 		this.tribe = "바퀴벌레";
+		this.Nocturnality = 1;
 		this.level = level;
 		this.power = 10 * level * location;
 		this.defense = 10 * level * location;
 		this.money = 10 * location;
 		this.hp = this.hpMax = 100 * level * location;
 		this.mp = this.mpMax = 100;
-		this.buff = 0;
-		this.debuff = 0;
 		this.expMax = 50 * level * location;
 		this.expGive = 10;
 		this.upgradeS01 = 0;
-		this.attack = (power + buff + debuff);
+		this.attack = power;
 	}
 
 	// 일반 공격
 	int attack() {
+		attack = current_power();
 		return attack;
 	}
 
@@ -158,22 +170,22 @@ class Roach extends Monster {
 class Butterfly extends Monster {
 	Butterfly(int level, int location) {
 		this.tribe = "나비";
+		this.Nocturnality = 0;
 		this.level = level;
 		this.power = 10 * level * location;
 		this.defense = 10 * level * location;
 		this.money = 10 * location;
 		this.hp = this.hpMax = 100 * level * location;
 		this.mp = this.mpMax = 100;
-		this.buff = 0;
-		this.debuff = 0;
 		this.expMax = 50 * level * location;
 		this.expGive = 10;
 		this.upgradeS01 = 0;
-		this.attack = (power + buff + debuff + upgradeS01);
+		this.attack = power;
 	}
 
 	// 일반 공격
 	int attack() {
+		attack = current_power();
 		return attack;
 	}
 
@@ -193,22 +205,22 @@ class Butterfly extends Monster {
 class Honeybee extends Monster {
 	Honeybee(int level, int location) {
 		this.tribe = "꿀법";
+		this.Nocturnality = 0;
 		this.level = level;
 		this.power = 10 * level * location;
 		this.defense = 10 * level * location;
 		this.money = 10 * location;
 		this.hp = this.hpMax = 100 * level * location;
 		this.mp = this.mpMax = 100;
-		this.buff = 0;
-		this.debuff = 0;
 		this.expMax = 50 * level * location;
 		this.expGive = 10;
 		this.upgradeS01 = 0;
-		this.attack = (power + buff + debuff + upgradeS01);
+		this.attack = power;
 	}
 
 	// 일반 공격
 	int attack() {
+		attack = current_power();
 		return attack;
 	}
 
@@ -218,6 +230,7 @@ class Honeybee extends Monster {
 	}
 
 	public int skill01() {// 몬스터 고유스킬 벌침쏘기
+		attack = current_power();
 		int attack_upgrade = (3 * attack) + upgradeS01;
 		this.hp -= 25;
 		this.mp -= 10;
@@ -229,22 +242,22 @@ class Honeybee extends Monster {
 class Spider extends Monster {
 	Spider(int level, int location) {
 		this.tribe = "거미";
+		this.Nocturnality = 1;
 		this.level = level;
 		this.power = 10 * level * location;
 		this.defense = 10 * level * location;
 		this.money = 10 * location;
 		this.hp = this.hpMax = 100 * level * location;
 		this.mp = this.mpMax = 100;
-		this.buff = 0;
-		this.debuff = 0;
 		this.expMax = 50 * level * location;
 		this.expGive = 10;
 		this.upgradeS01 = 0;
-		this.attack = (power + buff + debuff);
+		this.attack = power;
 	}
 
 	// 일반 공격
 	int attack() {
+		attack = current_power();
 		return attack;
 	}
 
@@ -264,6 +277,7 @@ class Spider extends Monster {
 class Mouse extends Monster {
 	Mouse(int level, int location) {
 		this.tribe = "쥐";
+		this.Nocturnality = 1;
 		this.level = level;
 		if (location == 1) {
 			this.power = 10 * level * location;
@@ -277,16 +291,15 @@ class Mouse extends Monster {
 			this.hp = this.hpMax = 1000 * level * location;
 		}
 		this.mp = this.mpMax = 100;
-		this.buff = 0;
-		this.debuff = 0;
 		this.expMax = 50 * level * location;
 		this.expGive = 10;
 		this.upgradeS01 = 0;
-		this.attack = (power + buff + debuff);
+		this.attack = power;
 	}
 
 	// 일반 공격
 	int attack() {
+		attack = current_power();
 		return attack;
 	}
 
@@ -299,6 +312,7 @@ class Mouse extends Monster {
 	}
 
 	public int skill01() {// 몬스터 고유스킬
+		attack = current_power();
 		int attack_upgrade = (2 * attack) + upgradeS01;
 		this.mp -= 10;
 		return attack_upgrade;
@@ -315,6 +329,7 @@ class Mouse extends Monster {
 class Cat extends Monster {
 	Cat(int level, int location) {
 		this.tribe = "고양이";
+		this.Nocturnality = 1;
 		this.level = level;
 		if (location == 1) {
 			this.power = 10 * level * location;
@@ -328,16 +343,15 @@ class Cat extends Monster {
 			this.hp = this.hpMax = 1000 * level * location;
 		}
 		this.mp = this.mpMax = 100;
-		this.buff = 0;
-		this.debuff = 0;
 		this.expMax = 50 * level * location;
 		this.expGive = 10;
 		this.upgradeS01 = 0;
-		this.attack = (power + buff + debuff);
+		this.attack = power;
 	}
 
 	// 일반 공격
 	int attack() {
+		attack = current_power();
 		return attack;
 	}
 
@@ -348,12 +362,14 @@ class Cat extends Monster {
 	}
 
 	public int skill01() {// 몬스터 고유스킬
+		attack = current_power();
 		int attack_upgrade = (2 * attack) + upgradeS01;
 		this.mp -= 10;
 		return attack_upgrade;
 	}
 
 	public int skill02() {// 몬스터 고유스킬
+		attack = current_power();
 		int attack_upgrade = (3 * attack) + upgradeS02;
 		this.mp -= 20;
 		return attack_upgrade;
@@ -364,22 +380,22 @@ class Cat extends Monster {
 class Zebra extends Monster {
 	Zebra(int level, int location) {
 		this.tribe = "얼룩말";
+		this.Nocturnality = 0;
 		this.level = level;
 		this.power = 10 * level * location;
 		this.defense = 10 * level * location;
 		this.money = 10 * location;
 		this.hp = this.hpMax = 100 * level * location;
 		this.mp = this.mpMax = 100;
-		this.buff = 0;
-		this.debuff = 0;
 		this.expMax = 50 * level * location;
 		this.expGive = 10;
 		this.upgradeS01 = 0;
-		this.attack = (power + buff + debuff);
+		this.attack = power;
 	}
 
 	// 일반 공격
 	int attack() {
+		attack = current_power();
 		return attack;
 	}
 
@@ -397,12 +413,14 @@ class Zebra extends Monster {
 	}
 
 	public int skill02() {// 몬스터 고유스킬
+		attack = current_power();
 		int attack_upgrade = (3 * attack) + upgradeS02;
 		this.mp -= 20;
 		return attack_upgrade;
 	}
 
 	public int skill03() {// 몬스터 고유스킬
+		attack = current_power();
 		int attack_upgrade = (4 * attack) + upgradeS03;
 		this.mp -= 30;
 		return attack_upgrade;
@@ -413,22 +431,22 @@ class Zebra extends Monster {
 class Carp extends Monster {
 	Carp(int level, int location) {
 		this.tribe = "붕어";
+		this.Nocturnality = 0;
 		this.level = level;
 		this.power = 10 * level * location;
 		this.defense = 10 * level * location;
 		this.money = 10 * location;
 		this.hp = this.hpMax = 100 * level * location;
 		this.mp = this.mpMax = 100;
-		this.buff = 0;
-		this.debuff = 0;
 		this.expMax = 50 * level * location;
 		this.expGive = 10;
 		this.upgradeS01 = 0;
-		this.attack = (power + buff + debuff);
+		this.attack = power;
 	}
 
 	// 일반 공격
 	int attack() {
+		attack = current_power();
 		return attack;
 	}
 
@@ -448,22 +466,22 @@ class Carp extends Monster {
 class Alligator_turtle extends Monster {
 	Alligator_turtle(int level, int location) {
 		this.tribe = "악어거북";
+		this.Nocturnality = 0;
 		this.level = level;
 		this.power = 10 * level * location;
 		this.defense = 10 * level * location;
 		this.money = 10 * location;
 		this.hp = this.hpMax = 100 * level * location;
 		this.mp = this.mpMax = 100;
-		this.buff = 0;
-		this.debuff = 0;
 		this.expMax = 50 * level * location;
 		this.expGive = 10;
 		this.upgradeS01 = 0;
-		this.attack = (power + buff + debuff);
+		this.attack = power;
 	}
 
 	// 일반 공격
 	int attack() {
+		attack = current_power();
 		return attack;
 	}
 
@@ -480,6 +498,7 @@ class Alligator_turtle extends Monster {
 	}
 
 	public int skill02() {// 몬스터 고유스킬
+		attack = current_power();
 		int attack_upgrade = (3 * attack) + upgradeS02;
 		this.mp -= 20;
 		return attack_upgrade;
@@ -490,22 +509,22 @@ class Alligator_turtle extends Monster {
 class Otter extends Monster {
 	Otter(int level, int location) {
 		this.tribe = "수달";
+		this.Nocturnality = 0;
 		this.level = level;
 		this.power = 10 * level * location;
 		this.defense = 10 * level * location;
 		this.money = 10 * location;
 		this.hp = this.hpMax = 100 * level * location;
 		this.mp = this.mpMax = 100;
-		this.buff = 0;
-		this.debuff = 0;
 		this.expMax = 50 * level * location;
 		this.expGive = 10;
 		this.upgradeS01 = 0;
-		this.attack = (power + buff + debuff);
+		this.attack = power;
 	}
 
 	// 일반 공격
 	int attack() {
+		attack = current_power();
 		return attack;
 	}
 
@@ -517,6 +536,7 @@ class Otter extends Monster {
 	}
 
 	public int skill01() {// 몬스터 고유스킬
+		attack = current_power();
 		int attack_upgrade = (2 * attack) + upgradeS01;
 		this.mp -= 10;
 		return attack_upgrade;
@@ -529,6 +549,7 @@ class Otter extends Monster {
 	}
 
 	public int skill03() {// 몬스터 고유스킬
+		attack = current_power();
 		int attack_upgrade = (4 * attack) + upgradeS03;
 		this.mp -= 30;
 		return attack_upgrade;
@@ -539,22 +560,22 @@ class Otter extends Monster {
 class Bat extends Monster {
 	Bat(int level, int location) {
 		this.tribe = "박쥐";
+		this.Nocturnality = 1;
 		this.level = level;
 		this.power = 10 * level * location;
 		this.defense = 10 * level * location;
 		this.money = 10 * location;
 		this.hp = this.hpMax = 100 * level * location;
 		this.mp = this.mpMax = 100;
-		this.buff = 0;
-		this.debuff = 0;
 		this.expMax = 50 * level * location;
 		this.expGive = 10;
 		this.upgradeS01 = 0;
-		this.attack = (power + buff + debuff);
+		this.attack = power;
 	}
 
 	// 일반 공격
 	int attack() {
+		attack = current_power();
 		return attack;
 	}
 
@@ -564,6 +585,7 @@ class Bat extends Monster {
 	}
 
 	public int skill01() {// 몬스터 고유스킬
+		attack = current_power();
 		int attack_upgrade = (2 * attack) + upgradeS01;
 		this.mp -= 10;
 		return attack_upgrade;
@@ -574,22 +596,22 @@ class Bat extends Monster {
 class Pigeon extends Monster {
 	Pigeon(int level, int location) {
 		this.tribe = "비둘기";
+		this.Nocturnality = 0;
 		this.level = level;
 		this.power = 10 * level * location;
 		this.defense = 10 * level * location;
 		this.money = 10 * location;
 		this.hp = this.hpMax = 100 * level * location;
 		this.mp = this.mpMax = 100;
-		this.buff = 0;
-		this.debuff = 0;
 		this.expMax = 50 * level * location;
 		this.expGive = 10;
 		this.upgradeS01 = 0;
-		this.attack = (power + buff + debuff);
+		this.attack = power;
 	}
 
 	// 일반 공격
 	int attack() {
+		attack = current_power();
 		return attack;
 	}
 
@@ -600,12 +622,14 @@ class Pigeon extends Monster {
 	}
 
 	public int skill01() {// 몬스터 고유스킬
+		attack = current_power();
 		int attack_upgrade = (2 * attack) + upgradeS01;
 		this.mp -= 10;
 		return attack_upgrade;
 	}
 
 	public int skill02() {// 몬스터 고유스킬
+		attack = current_power();
 		int attack_upgrade = (4 * attack) + upgradeS02;
 		this.hp -= (50 - upgradeS02);
 		this.mp -= 20;
@@ -617,22 +641,22 @@ class Pigeon extends Monster {
 class Kestrel extends Monster {
 	Kestrel(int level, int location) {
 		this.tribe = "황조롱이";
+		this.Nocturnality = 0;
 		this.level = level;
 		this.power = 10 * level * location;
 		this.defense = 10 * level * location;
 		this.money = 10 * location;
 		this.hp = this.hpMax = 100 * level * location;
 		this.mp = this.mpMax = 100;
-		this.buff = 0;
-		this.debuff = 0;
 		this.expMax = 50 * level * location;
 		this.expGive = 10;
 		this.upgradeS01 = 0;
-		this.attack = (power + buff + debuff);
+		this.attack = power;
 	}
 
 	// 일반 공격
 	int attack() {
+		attack = current_power();
 		return attack;
 	}
 
@@ -644,12 +668,14 @@ class Kestrel extends Monster {
 	}
 
 	public int skill01() {// 몬스터 고유스킬
+		attack = current_power();
 		int attack_upgrade = (2 * attack) + upgradeS01;
 		this.mp -= 10;
 		return attack_upgrade;
 	}
 
 	public int skill02() {// 몬스터 고유스킬
+		attack = current_power();
 		int attack_upgrade = (4 * attack) + upgradeS02;
 		this.hp -= (50 - upgradeS02);
 		this.mp -= 20;
@@ -657,6 +683,7 @@ class Kestrel extends Monster {
 	}
 
 	public int skill03() {// 몬스터 고유스킬
+		attack = current_power();
 		int attack_upgrade = (4 * attack) + upgradeS03;
 		this.mp -= 30;
 		return attack_upgrade;
@@ -667,22 +694,22 @@ class Kestrel extends Monster {
 class Squirrel extends Monster {
 	Squirrel(int level, int location) {
 		this.tribe = "다람쥐";
+		this.Nocturnality = 0;
 		this.level = level;
 		this.power = 10 * level * location;
 		this.defense = 10 * level * location;
 		this.money = 10 * location;
 		this.hp = this.hpMax = 100 * level * location;
 		this.mp = this.mpMax = 100;
-		this.buff = 0;
-		this.debuff = 0;
 		this.expMax = 50 * level * location;
 		this.expGive = 10;
 		this.upgradeS01 = 0;
-		this.attack = (power + buff + debuff);
+		this.attack = power;
 	}
 
 	// 일반 공격
 	int attack() {
+		attack = current_power();
 		return attack;
 	}
 
@@ -692,6 +719,7 @@ class Squirrel extends Monster {
 	}
 
 	public int skill01() {// 몬스터 고유스킬
+		attack = current_power();
 		int attack_upgrade = (2 * attack) + upgradeS01;
 		this.mp -= 10;
 		return attack_upgrade;
@@ -702,22 +730,22 @@ class Squirrel extends Monster {
 class Goat extends Monster {
 	Goat(int level, int location) {
 		this.tribe = "산양";
+		this.Nocturnality = 0;
 		this.level = level;
 		this.power = 10 * level * location;
 		this.defense = 10 * level * location;
 		this.money = 10 * location;
 		this.hp = this.hpMax = 10 * level * location;
 		this.mp = this.mpMax = 100;
-		this.buff = 0;
-		this.debuff = 0;
 		this.expMax = 50 * level * location;
 		this.expGive = 10;
 		this.upgradeS01 = 0;
-		this.attack = (power + buff + debuff);
+		this.attack = power;
 	}
 
 	// 일반 공격
 	int attack() {
+		attack = current_power();
 		return attack;
 	}
 
@@ -728,12 +756,14 @@ class Goat extends Monster {
 	}
 
 	public int skill01() {// 몬스터 고유스킬
+		attack = current_power();
 		int attack_upgrade = (2 * attack) + upgradeS01;
 		this.mp -= 10;
 		return attack_upgrade;
 	}
 
 	public int skill02() {// 몬스터 고유스킬
+		attack = current_power();
 		int attack_upgrade = (3 * attack) + upgradeS02;
 		this.mp -= 20;
 		return attack_upgrade;
@@ -744,6 +774,7 @@ class Goat extends Monster {
 class Tiger extends Monster {
 	Tiger(int level, int location) {
 		this.tribe = "호랑이";
+		this.Nocturnality = 1;
 		this.level = level;
 		if (location == 2) {
 			this.power = 10 * level * location;
@@ -757,16 +788,15 @@ class Tiger extends Monster {
 			this.hp = this.hpMax = 1000 * level * location;
 		}
 		this.mp = this.mpMax = 100;
-		this.buff = 0;
-		this.debuff = 0;
 		this.expMax = 50 * level * location;
 		this.expGive = 10;
 		this.upgradeS01 = 0;
-		this.attack = (power + buff + debuff);
+		this.attack = power;
 	}
 
 	// 일반 공격
 	int attack() {
+		attack = current_power();
 		return attack;
 	}
 
@@ -792,12 +822,14 @@ class Tiger extends Monster {
 	}
 
 	public int skill02() {// 몬스터 고유스킬
+		attack = current_power();
 		int attack_upgrade = (3 * attack) + upgradeS02;
 		this.mp -= 20;
 		return attack_upgrade;
 	}
 
 	public int skill03() {// 몬스터 고유스킬
+		attack = current_power();
 		int attack_upgrade = (4 * attack) + upgradeS03;
 		this.mp -= 30;
 		return attack_upgrade;
@@ -808,22 +840,22 @@ class Tiger extends Monster {
 class RockFish extends Monster {
 	RockFish(int level, int location) {
 		this.tribe = "우럭";
+		this.Nocturnality = 0;
 		this.level = level;
 		this.power = 10 * level * location;
 		this.defense = 10 * level * location;
 		this.money = 10 * location;
 		this.hp = this.hpMax = 100 * level * location;
 		this.mp = this.mpMax = 100;
-		this.buff = 0;
-		this.debuff = 0;
 		this.expMax = 50 * level * location;
 		this.expGive = 10;
 		this.upgradeS01 = 0;
-		this.attack = (power + buff + debuff);
+		this.attack = power;
 	}
 
 	// 일반 공격
 	int attack() {
+		attack = current_power();
 		return attack;
 	}
 
@@ -833,6 +865,7 @@ class RockFish extends Monster {
 	}
 
 	public int skill01() {// 몬스터 고유스킬
+		attack = current_power();
 		int attack_upgrade = (2 * attack) + upgradeS01;
 		this.mp -= 10;
 		return attack_upgrade;
@@ -843,22 +876,22 @@ class RockFish extends Monster {
 class Squid extends Monster {
 	Squid(int level, int location) {
 		this.tribe = "오징어";
+		this.Nocturnality = 1;
 		this.level = level;
 		this.power = 10 * level * location;
 		this.defense = 10 * level * location;
 		this.money = 10 * location;
 		this.hp = this.hpMax = 100 * level * location;
 		this.mp = this.mpMax = 100;
-		this.buff = 0;
-		this.debuff = 0;
 		this.expMax = 50 * level * location;
 		this.expGive = 10;
 		this.upgradeS01 = 0;
-		this.attack = (power + buff + debuff);
+		this.attack = power;
 	}
 
 	// 일반 공격
 	int attack() {
+		attack = current_power();
 		return attack;
 	}
 
@@ -869,12 +902,14 @@ class Squid extends Monster {
 	}
 
 	public int skill01() {// 몬스터 고유스킬
+		attack = current_power();
 		int attack_upgrade = (2 * attack) + upgradeS01;
 		this.mp -= 10;
 		return attack_upgrade;
 	}
 
 	public int skill02() {// 몬스터 고유스킬
+		attack = current_power();
 		int attack_upgrade = (4 * attack) + upgradeS02;
 		this.hp -= (100 - upgradeS02);
 		this.mp -= 20;
@@ -886,22 +921,22 @@ class Squid extends Monster {
 class Shark extends Monster {
 	Shark(int level, int location) {
 		this.tribe = "상어";
+		this.Nocturnality = 0;
 		this.level = level;
 		this.power = 10 * level * location;
 		this.defense = 10 * level * location;
 		this.money = 10 * location;
 		this.hp = this.hpMax = 100 * level * location;
 		this.mp = this.mpMax = 100;
-		this.buff = 0;
-		this.debuff = 0;
 		this.expMax = 50 * level * location;
 		this.expGive = 10;
 		this.upgradeS01 = 0;
-		this.attack = (power + buff + debuff);
+		this.attack = power;
 	}
 
 	// 일반 공격
 	int attack() {
+		attack = current_power();
 		return attack;
 	}
 
@@ -913,18 +948,21 @@ class Shark extends Monster {
 	}
 
 	public int skill01() {// 몬스터 고유스킬
+		attack = current_power();
 		int attack_upgrade = (2 * attack) + upgradeS01;
 		this.mp -= 10;
 		return attack_upgrade;
 	}
 
 	public int skill02() {// 몬스터 고유스킬
+		attack = current_power();
 		int attack_upgrade = (3 * attack) + upgradeS02;
 		this.mp -= 20;
 		return attack_upgrade;
 	}
 
 	public int skill03() {// 몬스터 고유스킬
+		attack = current_power();
 		int attack_upgrade = (4 * attack) + upgradeS03;
 		this.mp -= 30;
 		return attack_upgrade;
@@ -935,22 +973,22 @@ class Shark extends Monster {
 class Nightingale extends Monster {
 	Nightingale(int level, int location) {
 		this.tribe = "꾀꼬리";
+		this.Nocturnality = 0;
 		this.level = level;
 		this.power = 10 * level * location;
 		this.defense = 10 * level * location;
 		this.money = 10 * location;
 		this.hp = this.hpMax = 100 * level * location;
 		this.mp = this.mpMax = 100;
-		this.buff = 0;
-		this.debuff = 0;
 		this.expMax = 50 * level * location;
 		this.expGive = 10;
 		this.upgradeS01 = 0;
-		this.attack = (power + buff + debuff);
+		this.attack = power;
 	}
 
 	// 일반 공격
 	int attack() {
+		attack = current_power();
 		return attack;
 	}
 
@@ -960,6 +998,7 @@ class Nightingale extends Monster {
 	}
 
 	public int skill01() {// 몬스터 고유스킬
+		attack = current_power();
 		int attack_upgrade = (2 * attack) + upgradeS01;
 		this.mp -= 10;
 		return attack_upgrade;
@@ -970,22 +1009,22 @@ class Nightingale extends Monster {
 class Owl extends Monster {
 	Owl(int level, int location) {
 		this.tribe = "부엉이";
+		this.Nocturnality = 1;
 		this.level = level;
 		this.power = 10 * level * location;
 		this.defense = 10 * level * location;
 		this.money = 10 * location;
 		this.hp = this.hpMax = 100 * level * location;
 		this.mp = this.mpMax = 100;
-		this.buff = 0;
-		this.debuff = 0;
 		this.expMax = 50 * level * location;
 		this.expGive = 10;
 		this.upgradeS01 = 0;
-		this.attack = (power + buff + debuff);
+		this.attack = power;
 	}
 
 	// 일반 공격
 	int attack() {
+		attack = current_power();
 		return attack;
 	}
 
@@ -1002,6 +1041,7 @@ class Owl extends Monster {
 	}
 
 	public int skill02() {// 몬스터 고유스킬
+		attack = current_power();
 		int attack_upgrade = (3 * attack) + upgradeS02;
 		this.mp -= 20;
 		return attack_upgrade;
@@ -1012,22 +1052,22 @@ class Owl extends Monster {
 class Eagle extends Monster {
 	Eagle(int level, int location) {
 		this.tribe = "독수리";
+		this.Nocturnality = 0;
 		this.level = level;
 		this.power = 10 * level * location;
 		this.defense = 10 * level * location;
 		this.money = 10 * location;
 		this.hp = this.hpMax = 100 * level * location;
 		this.mp = this.mpMax = 100;
-		this.buff = 0;
-		this.debuff = 0;
 		this.expMax = 50 * level * location;
 		this.expGive = 10;
 		this.upgradeS01 = 0;
-		this.attack = (power + buff + debuff);
+		this.attack = power;
 	}
 
 	// 일반 공격
 	int attack() {
+		attack = current_power();
 		return attack;
 	}
 
@@ -1045,12 +1085,14 @@ class Eagle extends Monster {
 	}
 
 	public int skill02() {// 몬스터 고유스킬
+		attack = current_power();
 		int attack_upgrade = (3 * attack) + upgradeS02;
 		this.mp -= 20;
 		return attack_upgrade;
 	}
 
 	public int skill03() {// 몬스터 고유스킬
+		attack = current_power();
 		int attack_upgrade = (4 * attack) + upgradeS03;
 		this.mp -= 30;
 		return attack_upgrade;
@@ -1061,22 +1103,22 @@ class Eagle extends Monster {
 class Boar extends Monster {
 	Boar(int level, int location) {
 		this.tribe = "멧돼지";
+		this.Nocturnality = 1;
 		this.level = level;
 		this.power = 100 * level * location;
 		this.defense = 100 * level * location;
 		this.money = 100 * location;
 		this.hp = this.hpMax = 1000 * level * location;
 		this.mp = this.mpMax = 100;
-		this.buff = 0;
-		this.debuff = 0;
 		this.expMax = 50 * level * location;
 		this.expGive = 10;
 		this.upgradeS01 = 0;
-		this.attack = (power + buff + debuff);
+		this.attack = power;
 	}
 
 	// 일반 공격
 	int attack() {
+		attack = current_power();
 		return attack;
 	}
 
@@ -1094,12 +1136,14 @@ class Boar extends Monster {
 	}
 
 	public int skill02() {// 몬스터 고유스킬
+		attack = current_power();
 		int attack_upgrade = (3 * attack) + upgradeS02;
 		this.mp -= 20;
 		return attack_upgrade;
 	}
 
 	public int skill03() {// 몬스터 고유스킬
+		attack = current_power();
 		int attack_upgrade = (4 * attack) + upgradeS03;
 		this.mp -= 30;
 		return attack_upgrade;
@@ -1110,22 +1154,22 @@ class Boar extends Monster {
 class Carp2 extends Monster {
 	Carp2(int level, int location) {
 		this.tribe = "잉어";
+		this.Nocturnality = 0;
 		this.level = level;
 		this.power = 100 * level * location;
 		this.defense = 100 * level * location;
 		this.money = 100 * location;
 		this.hp = this.hpMax = 1000 * level * location;
 		this.mp = this.mpMax = 1000;
-		this.buff = 0;
-		this.debuff = 0;
 		this.expMax = 50 * level * location;
 		this.expGive = 10;
 		this.upgradeS01 = 0;
-		this.attack = (power + buff + debuff);
+		this.attack = power;
 	}
 
 	// 일반 공격
 	int attack() {
+		attack = current_power();
 		return attack;
 	}
 
@@ -1145,22 +1189,22 @@ class Carp2 extends Monster {
 class Mandarin_fish extends Monster {
 	Mandarin_fish(int level, int location) {
 		this.tribe = "쏘가리";
+		this.Nocturnality = 0;
 		this.level = level;
 		this.power = 100 * level * location;
 		this.defense = 100 * level * location;
 		this.money = 100 * location;
 		this.hp = this.hpMax = 1000 * level * location;
 		this.mp = this.mpMax = 100;
-		this.buff = 0;
-		this.debuff = 0;
 		this.expMax = 50 * level * location;
 		this.expGive = 10;
 		this.upgradeS01 = 0;
-		this.attack = (power + buff + debuff);
+		this.attack = power;
 	}
 
 	// 일반 공격
 	int attack() {
+		attack = current_power();
 		return attack;
 	}
 
@@ -1171,6 +1215,7 @@ class Mandarin_fish extends Monster {
 	}
 
 	public int skill01() {// 몬스터 고유스킬
+		attack = current_power();
 		int attack_upgrade = (2 * attack) + upgradeS01;
 		this.mp -= 10;
 		return attack_upgrade;
@@ -1187,22 +1232,22 @@ class Mandarin_fish extends Monster {
 class Nutria extends Monster {
 	Nutria(int level, int location) {
 		this.tribe = "뉴트리아";
+		this.Nocturnality = 0;
 		this.level = level;
 		this.power = 100 * level * location;
 		this.defense = 100 * level * location;
 		this.money = 100 * location;
 		this.hp = this.hpMax = 1000 * level * location;
 		this.mp = this.mpMax = 100;
-		this.buff = 0;
-		this.debuff = 0;
 		this.expMax = 50 * level * location;
 		this.expGive = 10;
 		this.upgradeS01 = 0;
-		this.attack = (power + buff + debuff);
+		this.attack = power;
 	}
 
 	// 일반 공격
 	int attack() {
+		attack = current_power();
 		return attack;
 	}
 
@@ -1214,6 +1259,7 @@ class Nutria extends Monster {
 	}
 
 	public int skill01() {// 몬스터 고유스킬
+		attack = current_power();
 		int attack_upgrade = (2 * attack) + upgradeS01;
 		this.mp -= 10;
 		return attack_upgrade;
@@ -1226,6 +1272,7 @@ class Nutria extends Monster {
 	}
 
 	public int skill03() {// 몬스터 고유스킬
+		attack = current_power();
 		int attack_upgrade = (4 * attack) + upgradeS03;
 		this.mp -= 30;
 		return attack_upgrade;
@@ -1236,22 +1283,22 @@ class Nutria extends Monster {
 class Kingfisher extends Monster {
 	Kingfisher(int level, int location) {
 		this.tribe = "물총새";
+		this.Nocturnality = 0;
 		this.level = level;
 		this.power = 100 * level * location;
 		this.defense = 100 * level * location;
 		this.money = 100 * location;
 		this.hp = this.hpMax = 1000 * level * location;
 		this.mp = this.mpMax = 100;
-		this.buff = 0;
-		this.debuff = 0;
 		this.expMax = 50 * level * location;
 		this.expGive = 10;
 		this.upgradeS01 = 0;
-		this.attack = (power + buff + debuff);
+		this.attack = power;
 	}
 
 	// 일반 공격
 	int attack() {
+		attack = current_power();
 		return attack;
 	}
 
@@ -1271,22 +1318,22 @@ class Kingfisher extends Monster {
 class Crane extends Monster {
 	Crane(int level, int location) {
 		this.tribe = "두루미";
+		this.Nocturnality = 0;
 		this.level = level;
 		this.power = 100 * level * location;
 		this.defense = 100 * level * location;
 		this.money = 100 * location;
 		this.hp = this.hpMax = 1000 * level * location;
 		this.mp = this.mpMax = 100;
-		this.buff = 0;
-		this.debuff = 0;
 		this.expMax = 50 * level * location;
 		this.expGive = 10;
 		this.upgradeS01 = 0;
-		this.attack = (power + buff + debuff);
+		this.attack = power;
 	}
 
 	// 일반 공격
 	int attack() {
+		attack = current_power();
 		return attack;
 	}
 
@@ -1303,6 +1350,7 @@ class Crane extends Monster {
 	}
 
 	public int skill02() {// 몬스터 고유스킬
+		attack = current_power();
 		int attack_upgrade = (3 * attack) + upgradeS02;
 		this.mp -= 20;
 		return attack_upgrade;
@@ -1313,22 +1361,22 @@ class Crane extends Monster {
 class Falcon extends Monster {
 	Falcon(int level, int location) {
 		this.tribe = "매";
+		this.Nocturnality = 0;
 		this.level = level;
 		this.power = 100 * level * location;
 		this.defense = 100 * level * location;
 		this.money = 100 * location;
 		this.hp = this.hpMax = 1000 * level * location;
 		this.mp = this.mpMax = 100;
-		this.buff = 0;
-		this.debuff = 0;
 		this.expMax = 50 * level * location;
 		this.expGive = 10;
 		this.upgradeS01 = 0;
-		this.attack = (power + buff + debuff);
+		this.attack = power;
 	}
 
 	// 일반 공격
 	int attack() {
+		attack = current_power();
 		return attack;
 	}
 
@@ -1346,12 +1394,14 @@ class Falcon extends Monster {
 	}
 
 	public int skill02() {// 몬스터 고유스킬
+		attack = current_power();
 		int attack_upgrade = (3 * attack) + upgradeS02;
 		this.mp -= 20;
 		return attack_upgrade;
 	}
 
 	public int skill03() {// 몬스터 고유스킬
+		attack = current_power();
 		int attack_upgrade = (4 * attack) + upgradeS03;
 		this.mp -= 30;
 		return attack_upgrade;
@@ -1362,22 +1412,22 @@ class Falcon extends Monster {
 class Snake extends Monster {
 	Snake(int level, int location) {
 		this.tribe = "구렁이";
+		this.Nocturnality = 1;
 		this.level = level;
 		this.power = 100 * level * location;
 		this.defense = 100 * level * location;
 		this.money = 100 * location;
 		this.hp = this.hpMax = 1000 * level * location;
 		this.mp = this.mpMax = 100;
-		this.buff = 0;
-		this.debuff = 0;
 		this.expMax = 50 * level * location;
 		this.expGive = 10;
 		this.upgradeS01 = 0;
-		this.attack = (power + buff + debuff);
+		this.attack = power;
 	}
 
 	// 일반 공격
 	int attack() {
+		attack = current_power();
 		return attack;
 	}
 
@@ -1394,6 +1444,7 @@ class Snake extends Monster {
 	}
 
 	public int skill02() {// 몬스터 고유스킬
+		attack = current_power();
 		int attack_upgrade = (3 * attack) + upgradeS02;
 		this.mp -= 20;
 		return attack_upgrade;
@@ -1404,22 +1455,22 @@ class Snake extends Monster {
 class Raw_Octopus extends Monster {
 	Raw_Octopus(int level, int location) {
 		this.tribe = "세발낙지";
+		this.Nocturnality = 1;
 		this.level = level;
 		this.power = 100 * level * location;
 		this.defense = 100 * level * location;
 		this.money = 100 * location;
 		this.hp = this.hpMax = 1000 * level * location;
 		this.mp = this.mpMax = 100;
-		this.buff = 0;
-		this.debuff = 0;
 		this.expMax = 50 * level * location;
 		this.expGive = 10;
 		this.upgradeS01 = 0;
-		this.attack = (power + buff + debuff);
+		this.attack = power;
 	}
 
 	// 일반 공격
 	int attack() {
+		attack = current_power();
 		return attack;
 	}
 
@@ -1429,6 +1480,7 @@ class Raw_Octopus extends Monster {
 	}
 
 	public int skill01() {// 몬스터 고유스킬
+		attack = current_power();
 		int attack_upgrade = (2 * attack) + upgradeS01;
 		this.mp -= 10;
 		return attack_upgrade;
@@ -1439,22 +1491,22 @@ class Raw_Octopus extends Monster {
 class BlowFish extends Monster {
 	BlowFish(int level, int location) {
 		this.tribe = "복어";
+		this.Nocturnality = 0;
 		this.level = level;
 		this.power = 100 * level * location;
 		this.defense = 100 * level * location;
 		this.money = 100 * location;
 		this.hp = this.hpMax = 1000 * level * location;
 		this.mp = this.mpMax = 100;
-		this.buff = 0;
-		this.debuff = 0;
 		this.expMax = 50 * level * location;
 		this.expGive = 10;
 		this.upgradeS01 = 0;
-		this.attack = (power + buff + debuff);
+		this.attack = power;
 	}
 
 	// 일반 공격
 	int attack() {
+		attack = current_power();
 		return attack;
 	}
 
@@ -1471,6 +1523,7 @@ class BlowFish extends Monster {
 	}
 
 	public int skill02() {// 몬스터 고유스킬
+		attack = current_power();
 		int attack_upgrade = (3 * attack) + upgradeS02;
 		this.mp -= 20;
 		return attack_upgrade;
@@ -1481,22 +1534,22 @@ class BlowFish extends Monster {
 class Gray_Whale extends Monster {
 	Gray_Whale(int level, int location) {
 		this.tribe = "귀신고래";
+		this.Nocturnality = 1;
 		this.level = level;
 		this.power = 100 * level * location;
 		this.defense = 100 * level * location;
 		this.money = 100 * location;
 		this.hp = this.hpMax = 1000 * level * location;
 		this.mp = this.mpMax = 100;
-		this.buff = 0;
-		this.debuff = 0;
 		this.expMax = 50 * level * location;
 		this.expGive = 10;
 		this.upgradeS01 = 0;
-		this.attack = (power + buff + debuff);
+		this.attack = power;
 	}
 
 	// 일반 공격
 	int attack() {
+		attack = current_power();
 		return attack;
 	}
 
@@ -1514,12 +1567,14 @@ class Gray_Whale extends Monster {
 	}
 
 	public int skill02() {// 몬스터 고유스킬
+		attack = current_power();
 		int attack_upgrade = (3 * attack) + upgradeS02;
 		this.mp -= 20;
 		return attack_upgrade;
 	}
 
 	public int skill03() {// 몬스터 고유스킬
+		attack = current_power();
 		int attack_upgrade = (4 * attack) + upgradeS03;
 		this.mp -= 30;
 		return attack_upgrade;
@@ -1530,22 +1585,22 @@ class Gray_Whale extends Monster {
 class Red_Dragonfly extends Monster {
 	Red_Dragonfly(int level, int location) {
 		this.tribe = "고추잠자리";
+		this.Nocturnality = 0;
 		this.level = level;
 		this.power = 100 * level * location;
 		this.defense = 100 * level * location;
 		this.money = 100 * location;
 		this.hp = this.hpMax = 1000 * level * location;
 		this.mp = this.mpMax = 100;
-		this.buff = 0;
-		this.debuff = 0;
 		this.expMax = 50 * level * location;
 		this.expGive = 10;
 		this.upgradeS01 = 0;
-		this.attack = (power + buff + debuff);
+		this.attack = power;
 	}
 
 	// 일반 공격
 	int attack() {
+		attack = current_power();
 		return attack;
 	}
 
@@ -1555,6 +1610,7 @@ class Red_Dragonfly extends Monster {
 	}
 
 	public int skill01() {// 몬스터 고유스킬
+		attack = current_power();
 		int attack_upgrade = (2 * attack) + upgradeS01;
 		this.mp -= 10;
 		return attack_upgrade;
@@ -1565,22 +1621,22 @@ class Red_Dragonfly extends Monster {
 class Swallow extends Monster {
 	Swallow(int level, int location) {
 		this.tribe = "제비";
+		this.Nocturnality = 0;
 		this.level = level;
 		this.power = 100 * level * location;
 		this.defense = 100 * level * location;
 		this.money = 100 * location;
 		this.hp = this.hpMax = 1000 * level * location;
 		this.mp = this.mpMax = 100;
-		this.buff = 0;
-		this.debuff = 0;
 		this.expMax = 50 * level * location;
 		this.expGive = 10;
 		this.upgradeS01 = 0;
-		this.attack = (power + buff + debuff);
+		this.attack = power;
 	}
 
 	// 일반 공격
 	int attack() {
+		attack = current_power();
 		return attack;
 	}
 
@@ -1591,6 +1647,7 @@ class Swallow extends Monster {
 	}
 
 	public int skill01() {// 몬스터 고유스킬
+		attack = current_power();
 		int attack_upgrade = (2 * attack) + upgradeS01;
 		this.mp -= 10;
 		return attack_upgrade;
@@ -1607,22 +1664,22 @@ class Swallow extends Monster {
 class Swan extends Monster {
 	Swan(int level, int location) {
 		this.tribe = "백조";
+		this.Nocturnality = 0;
 		this.level = level;
 		this.power = 100 * level * location;
 		this.defense = 100 * level * location;
 		this.money = 100 * location;
 		this.hp = this.hpMax = 1000 * level * location;
 		this.mp = this.mpMax = 100;
-		this.buff = 0;
-		this.debuff = 0;
 		this.expMax = 50 * level * location;
 		this.expGive = 10;
 		this.upgradeS01 = 0;
-		this.attack = (power + buff + debuff);
+		this.attack = power;
 	}
 
 	// 일반 공격
 	int attack() {
+		attack = current_power();
 		return attack;
 	}
 
@@ -1634,6 +1691,7 @@ class Swan extends Monster {
 	}
 
 	public int skill01() {// 몬스터 고유스킬
+		attack = current_power();
 		int attack_upgrade = (2 * attack) + upgradeS01;
 		this.mp -= 10;
 		return attack_upgrade;
@@ -1646,6 +1704,7 @@ class Swan extends Monster {
 	}
 
 	public int skill03() {// 몬스터 고유스킬
+		attack = current_power();
 		int attack_upgrade = (4 * attack) + upgradeS03;
 		this.mp -= 30;
 		return attack_upgrade;
@@ -1656,22 +1715,22 @@ class Swan extends Monster {
 class Flying_Squirrel extends Monster {
 	Flying_Squirrel(int level, int location) {
 		this.tribe = "하늘다람쥐";
+		this.Nocturnality = 0;
 		this.level = level;
 		this.power = 1000 * level * location;
 		this.defense = 1000 * level * location;
 		this.money = 1000 * location;
 		this.hp = this.hpMax = 10000 * level * location;
 		this.mp = this.mpMax = 100;
-		this.buff = 0;
-		this.debuff = 0;
 		this.expMax = 50 * level * location;
 		this.expGive = 10;
 		this.upgradeS01 = 0;
-		this.attack = (power + buff + debuff);
+		this.attack = power;
 	}
 
 	// 일반 공격
 	int attack() {
+		attack = current_power();
 		return attack;
 	}
 
@@ -1681,6 +1740,7 @@ class Flying_Squirrel extends Monster {
 	}
 
 	public int skill01() {// 몬스터 고유스킬
+		attack = current_power();
 		int attack_upgrade = (2 * attack) + upgradeS01;
 		this.mp -= 10;
 		return attack_upgrade;
@@ -1691,22 +1751,22 @@ class Flying_Squirrel extends Monster {
 class Deer extends Monster {
 	Deer(int level, int location) {
 		this.tribe = "노루";
+		this.Nocturnality = 0;
 		this.level = level;
 		this.power = 1000 * level * location;
 		this.defense = 1000 * level * location;
 		this.money = 1000 * location;
 		this.hp = this.hpMax = 10000 * level * location;
 		this.mp = this.mpMax = 100;
-		this.buff = 0;
-		this.debuff = 0;
 		this.expMax = 50 * level * location;
 		this.expGive = 10;
 		this.upgradeS01 = 0;
-		this.attack = (power + buff + debuff);
+		this.attack = power;
 	}
 
 	// 일반 공격
 	int attack() {
+		attack = current_power();
 		return attack;
 	}
 
@@ -1717,12 +1777,14 @@ class Deer extends Monster {
 	}
 
 	public int skill01() {// 몬스터 고유스킬
+		attack = current_power();
 		int attack_upgrade = (2 * attack) + upgradeS01;
 		this.mp -= 10;
 		return attack_upgrade;
 	}
 
 	public int skill02() {// 몬스터 고유스킬
+		attack = current_power();
 		int attack_upgrade = (3 * attack) + upgradeS02;
 		this.mp -= 20;
 		return attack_upgrade;
@@ -1733,22 +1795,22 @@ class Deer extends Monster {
 class Thibetanus extends Monster {
 	Thibetanus(int level, int location) {
 		this.tribe = "반달가슴곰";
+		this.Nocturnality = 0;
 		this.level = level;
 		this.power = 1000 * level * location;
 		this.defense = 1000 * level * location;
 		this.money = 1000 * location;
 		this.hp = this.hpMax = 10000 * level * location;
 		this.mp = this.mpMax = 100;
-		this.buff = 0;
-		this.debuff = 0;
 		this.expMax = 50 * level * location;
 		this.expGive = 10;
 		this.upgradeS01 = 0;
-		this.attack = (power + buff + debuff);
+		this.attack = power;
 	}
 
 	// 일반 공격
 	int attack() {
+		attack = current_power();
 		return attack;
 	}
 
@@ -1760,6 +1822,7 @@ class Thibetanus extends Monster {
 	}
 
 	public int skill01() {// 몬스터 고유스킬
+		attack = current_power();
 		int attack_upgrade = (2 * attack) + upgradeS01;
 		this.mp -= 10;
 		return attack_upgrade;
@@ -1772,6 +1835,7 @@ class Thibetanus extends Monster {
 	}
 
 	public int skill03() {// 몬스터 고유스킬
+		attack = current_power();
 		int attack_upgrade = (4 * attack) + upgradeS03;
 		this.mp -= 30;
 		return attack_upgrade;
@@ -1782,22 +1846,22 @@ class Thibetanus extends Monster {
 class Ray extends Monster {
 	Ray(int level, int location) {
 		this.tribe = "가오리";
+		this.Nocturnality = 1;
 		this.level = level;
 		this.power = 1000 * level * location;
 		this.defense = 1000 * level * location;
 		this.money = 1000 * location;
 		this.hp = this.hpMax = 10000 * level * location;
 		this.mp = this.mpMax = 100;
-		this.buff = 0;
-		this.debuff = 0;
 		this.expMax = 50 * level * location;
 		this.expGive = 10;
 		this.upgradeS01 = 0;
-		this.attack = (power + buff + debuff);
+		this.attack = power;
 	}
 
 	// 일반 공격
 	int attack() {
+		attack = current_power();
 		return attack;
 	}
 
@@ -1807,6 +1871,7 @@ class Ray extends Monster {
 	}
 
 	public int skill01() {// 몬스터 고유스킬
+		attack = current_power();
 		int attack_upgrade = (2 * attack) + upgradeS01;
 		this.mp -= 10;
 		return attack_upgrade;
@@ -1817,22 +1882,22 @@ class Ray extends Monster {
 class Electric_ell extends Monster {
 	Electric_ell(int level, int location) {
 		this.tribe = "전기뱀장어";
+		this.Nocturnality = 1;
 		this.level = level;
 		this.power = 1000 * level * location;
 		this.defense = 1000 * level * location;
 		this.money = 1000 * location;
 		this.hp = this.hpMax = 10000 * level * location;
 		this.mp = this.mpMax = 100;
-		this.buff = 0;
-		this.debuff = 0;
 		this.expMax = 50 * level * location;
 		this.expGive = 10;
 		this.upgradeS01 = 0;
-		this.attack = (power + buff + debuff);
+		this.attack = power;
 	}
 
 	// 일반 공격
 	int attack() {
+		attack = current_power();
 		return attack;
 	}
 
@@ -1849,6 +1914,7 @@ class Electric_ell extends Monster {
 	}
 
 	public int skill02() {// 몬스터 고유스킬
+		attack = current_power();
 		int attack_upgrade = (3 * attack) + upgradeS02;
 		this.mp -= 20;
 		return attack_upgrade;
@@ -1859,22 +1925,22 @@ class Electric_ell extends Monster {
 class Orca extends Monster {
 	Orca(int level, int location) {
 		this.tribe = "범고래";
+		this.Nocturnality = 0;
 		this.level = level;
 		this.power = 1000 * level * location;
 		this.defense = 1000 * level * location;
 		this.money = 1000 * location;
 		this.hp = this.hpMax = 10000 * level * location;
 		this.mp = this.mpMax = 100;
-		this.buff = 0;
-		this.debuff = 0;
 		this.expMax = 50 * level * location;
 		this.expGive = 10;
 		this.upgradeS01 = 0;
-		this.attack = (power + buff + debuff);
+		this.attack = power;
 	}
 
 	// 일반 공격
 	int attack() {
+		attack = current_power();
 		return attack;
 	}
 
@@ -1886,6 +1952,7 @@ class Orca extends Monster {
 	}
 
 	public int skill01() {// 몬스터 고유스킬
+		attack = current_power();
 		int attack_upgrade = (2 * attack) + upgradeS01;
 		this.mp -= 10;
 		return attack_upgrade;
@@ -1898,6 +1965,7 @@ class Orca extends Monster {
 	}
 
 	public int skill03() {// 몬스터 고유스킬
+		attack = current_power();
 		int attack_upgrade = (4 * attack) + upgradeS03;
 		this.mp -= 30;
 		return attack_upgrade;
@@ -1908,22 +1976,22 @@ class Orca extends Monster {
 class Gull extends Monster {
 	Gull(int level, int location) {
 		this.tribe = "갈매기";
+		this.Nocturnality = 0;
 		this.level = level;
 		this.power = 1000 * level * location;
 		this.defense = 1000 * level * location;
 		this.money = 1000 * location;
 		this.hp = this.hpMax = 10000 * level * location;
 		this.mp = this.mpMax = 100;
-		this.buff = 0;
-		this.debuff = 0;
 		this.expMax = 50 * level * location;
 		this.expGive = 10;
 		this.upgradeS01 = 0;
-		this.attack = (power + buff + debuff);
+		this.attack = power;
 	}
 
 	// 일반 공격
 	int attack() {
+		attack = current_power();
 		return attack;
 	}
 
@@ -1933,6 +2001,7 @@ class Gull extends Monster {
 	}
 
 	public int skill01() {// 몬스터 고유스킬
+		attack = current_power();
 		int attack_upgrade = (2 * attack) + upgradeS01;
 		this.mp -= 10;
 		return attack_upgrade;
@@ -1943,22 +2012,22 @@ class Gull extends Monster {
 class Albatross extends Monster {
 	Albatross(int level, int location) {
 		this.tribe = "알바트로스";
+		this.Nocturnality = 0;
 		this.level = level;
 		this.power = 1000 * level * location;
 		this.defense = 1000 * level * location;
 		this.money = 1000 * location;
 		this.hp = this.hpMax = 10000 * level * location;
 		this.mp = this.mpMax = 100;
-		this.buff = 0;
-		this.debuff = 0;
 		this.expMax = 50 * level * location;
 		this.expGive = 10;
 		this.upgradeS01 = 0;
-		this.attack = (power + buff + debuff);
+		this.attack = power;
 	}
 
 	// 일반 공격
 	int attack() {
+		attack = current_power();
 		return attack;
 	}
 
@@ -1969,12 +2038,14 @@ class Albatross extends Monster {
 	}
 
 	public int skill01() {// 몬스터 고유스킬
+		attack = current_power();
 		int attack_upgrade = (2 * attack) + upgradeS02;
 		this.mp -= 10;
 		return attack_upgrade;
 	}
 
 	public int skill02() {// 몬스터 고유스킬
+		attack = current_power();
 		int attack_upgrade = (3 * attack) + upgradeS02;
 		this.mp -= 20;
 		return attack_upgrade;
@@ -1985,22 +2056,22 @@ class Albatross extends Monster {
 class Pelican extends Monster {
 	Pelican(int level, int location) {
 		this.tribe = "펠리컨";
+		this.Nocturnality = 0;
 		this.level = level;
 		this.power = 1000 * level * location;
 		this.defense = 1000 * level * location;
 		this.money = 1000 * location;
 		this.hp = this.hpMax = 10000 * level * location;
 		this.mp = this.mpMax = 100;
-		this.buff = 0;
-		this.debuff = 0;
 		this.expMax = 50 * level * location;
 		this.expGive = 10;
 		this.upgradeS01 = 0;
-		this.attack = (power + buff + debuff);
+		this.attack = power;
 	}
 
 	// 일반 공격
 	int attack() {
+		attack = current_power();
 		return attack;
 	}
 
@@ -2012,18 +2083,21 @@ class Pelican extends Monster {
 	}
 
 	public int skill01() {// 몬스터 고유스킬
+		attack = current_power();
 		int attack_upgrade = (2 * attack) + upgradeS01;
 		this.mp -= 10;
 		return attack_upgrade;
 	}
 
 	public int skill02() {// 몬스터 고유스킬
+		attack = current_power();
 		int attack_upgrade = (3 * attack) + upgradeS02;
 		this.mp -= 20;
 		return attack_upgrade;
 	}
 
 	public int skill03() {// 몬스터 고유스킬
+		attack = current_power();
 		int attack_upgrade = (4 * attack) + upgradeS03;
 		this.mp -= 30;
 		return attack_upgrade;
@@ -2034,22 +2108,22 @@ class Pelican extends Monster {
 class RentCar extends Monster {
 	RentCar(int level, int location) {
 		this.tribe = "렌트카";
+		this.Nocturnality = 0;
 		this.level = level;
 		this.power = 1000 * level * location;
 		this.defense = 1000 * level * location;
 		this.money = 1000 * location;
 		this.hp = this.hpMax = 10000 * level * location;
 		this.mp = this.mpMax = 100;
-		this.buff = 0;
-		this.debuff = 0;
 		this.expMax = 50 * level * location;
 		this.expGive = 10;
 		this.upgradeS01 = 0;
-		this.attack = (power + buff + debuff);
+		this.attack = power;
 	}
 
 	// 일반 공격
 	int attack() {
+		attack = current_power();
 		return attack;
 	}
 
@@ -2059,6 +2133,7 @@ class RentCar extends Monster {
 	}
 
 	public int skill01() {// 몬스터 고유스킬
+		attack = current_power();
 		int attack_upgrade = (50 * attack) + upgradeS01;
 		this.mp -= 100;
 		return attack_upgrade;
@@ -2069,22 +2144,22 @@ class RentCar extends Monster {
 class Submarine extends Monster {
 	Submarine(int level, int location) {
 		this.tribe = "관광용 잠수함";
+		this.Nocturnality = 1;
 		this.level = level;
 		this.power = 1000 * level * location;
 		this.defense = 1000 * level * location;
 		this.money = 1000 * location;
 		this.hp = this.hpMax = 10000 * level * location;
 		this.mp = this.mpMax = 100;
-		this.buff = 0;
-		this.debuff = 0;
 		this.expMax = 50 * level * location;
 		this.expGive = 10;
 		this.upgradeS01 = 0;
-		this.attack = (power + buff + debuff);
+		this.attack = power;
 	}
 
 	// 일반 공격
 	int attack() {
+		attack = current_power();
 		return attack;
 	}
 
@@ -2094,6 +2169,7 @@ class Submarine extends Monster {
 	}
 
 	public int skill01() {// 몬스터 고유스킬
+		attack = current_power();
 		int attack_upgrade = (50 * attack) + upgradeS01;
 		this.mp -= 100;
 		return attack_upgrade;
@@ -2104,22 +2180,22 @@ class Submarine extends Monster {
 class JEJU_airline_plane extends Monster {
 	JEJU_airline_plane(int level, int location) {
 		this.tribe = "제주항공 여객기";
+		this.Nocturnality = 0;
 		this.level = level;
 		this.power = 1000 * level * location;
 		this.defense = 1000 * level * location;
 		this.money = 1000 * location;
 		this.hp = this.hpMax = 10000 * level * location;
 		this.mp = this.mpMax = 100;
-		this.buff = 0;
-		this.debuff = 0;
 		this.expMax = 50 * level * location;
 		this.expGive = 10;
 		this.upgradeS01 = 0;
-		this.attack = (power + buff + debuff);
+		this.attack = power;
 	}
 
 	// 일반 공격
 	int attack() {
+		attack = current_power();
 		return attack;
 	}
 
@@ -2129,6 +2205,7 @@ class JEJU_airline_plane extends Monster {
 	}
 
 	public int skill01() {// 몬스터 고유스킬
+		attack = current_power();
 		int attack_upgrade = (50 * attack) + upgradeS01;
 		this.mp -= 100;
 		return attack_upgrade;
@@ -2139,6 +2216,7 @@ class JEJU_airline_plane extends Monster {
 class Human extends Monster {
 	Human() {
 		this.tribe = "인간";
+		this.Nocturnality = 1;
 		this.level = 999999999;
 		this.power = 999999999;
 		this.defense = 999999999;
@@ -2148,6 +2226,7 @@ class Human extends Monster {
 
 	// 일반 공격
 	int attack() {
+		attack = current_power();
 		return power;
 	}
 
