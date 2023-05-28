@@ -29,8 +29,8 @@ public class ShowStatus extends JFrame {
 		data[0][1] = Integer.toString(Player.p.level) + "LV";
 		data[0][2] = "||||||||||||||||||||||||||||||";
 
-		data[1][0] = "힘";
-		data[1][1] = Integer.toString(Player.p.power);
+		data[1][0] = "공격력";
+		data[1][1] = Integer.toString(Player.p.attack);
 		data[1][2] = "||||||||||||||||||||||||||||||";
 
 		if (Player.투구N != 0 && Player.갑옷N != 0) {
