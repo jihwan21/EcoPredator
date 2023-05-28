@@ -2229,8 +2229,4 @@ class Human extends Monster {
 		attack = current_power();
 		return power;
 	}
-
-	void skill_info() {
-		System.out.println("0. 멸종");
-	}
 }
