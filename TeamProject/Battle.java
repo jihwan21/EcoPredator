@@ -30,19 +30,19 @@ public class Battle {
 		System.out.printf("|%d/%d\n", m1.hp, m1.hpMax);
 
 		System.out.print(m1.tribe + "공격력|");
-		for (i = 1; i <= (int) ((float) m1.attack / N * N1); i++) {
-			if (0 == i % 116)
-				System.out.println();
-			System.out.print(attack);
-		}
+//		for (i = 1; i <= (int) ((float) m1.attack / N * N1); i++) {
+//			if (0 == i % 116)
+//				System.out.println();
+//			System.out.print(attack);
+//		}
 		System.out.printf("|%d\n", m1.attack);
 
 		System.out.print(m1.tribe + "방어력|");
-		for (i = 1; i <= (int) ((float) m1.defense / N * N1); i++) {
-			if (0 == i % 116)
-				System.out.println();
-			System.out.print(spade);
-		}
+//		for (i = 1; i <= (int) ((float) m1.defense / N * N1); i++) {
+//			if (0 == i % 116)
+//				System.out.println();
+//			System.out.print(spade);
+//		}
 		System.out.printf("|%d\n\n", m1.defense);
 //==========================================================================================
 		System.out.print(Player.name + "체력 |");
@@ -54,19 +54,19 @@ public class Battle {
 		System.out.printf("|%d/%d\n", m2.hp, m2.hpMax);
 
 		System.out.print(Player.name + "공격력|");
-		for (i = 1; i <= (int) ((float) m2.attack / N * N1); i++) {
-			if (0 == i % 116)
-				System.out.println();
-			System.out.print(attack);
-		}
+//		for (i = 1; i <= (int) ((float) m2.attack / N * N1); i++) {
+//			if (0 == i % 116)
+//				System.out.println();
+//			System.out.print(attack);
+//		}
 		System.out.printf("|%d\n", m2.attack);
 
 		System.out.print(Player.name + "방어력|");
-		for (i = 1; i <= (int) ((float) m2.defense / N * N1); i++) {
-			if (0 == i % 116)
-				System.out.println();
-			System.out.print(spade);
-		}
+//		for (i = 1; i <= (int) ((float) m2.defense / N * N1); i++) {
+//			if (0 == i % 116)
+//				System.out.println();
+//			System.out.print(spade);
+//		}
 		System.out.printf("|%d\n\n", m2.defense);
 
 		System.out.println();
@@ -120,7 +120,10 @@ public class Battle {
 						m.skill_info();
 						System.out.print("선택 : ");
 						select = in.nextInt();
-						if (select == 0) {
+						if (m.mp < 0) {
+							System.out.println("마나가 부족합니다.\n 턴이 넘어갑니다.");
+							break;
+						} else if (select == 0) {
 							demage = m.attack();
 							m.attack = attack_copy; // 원래 공격력으로 복구
 							break;
