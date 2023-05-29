@@ -371,7 +371,7 @@ public class Battle {
 		String message = "인간과 눈이 마주쳤습니다....\n" + "인간이 공격합니다.\n";
 		int delay = 100; // 1초 딜레이
 
-		for (int i = 0; i < message.length(); i++) {
+		for (int i = 0; i < message.length(); i++) {//0.1초의 딜레이로 엔딩 멘트 
 			System.out.print(message.charAt(i));
 
 			try {
@@ -415,15 +415,15 @@ public class Battle {
 		}
 	}
 
-	static void battleEnding(Human m1) {
+	static void battleEnding(Human m1) {//엔딩 배틀 메서드
 		Scanner in = new Scanner(System.in);
-		Print.printBar();
-		ImageOutputExample.사람눈();
+		Print.printBar();//구분선
+		ImageOutputExample.사람눈();//사진 가져오기
 
 		System.out.print("Enter를 누르세요.");
 		String n = in.nextLine();
 
-		end1();
+		end1();//엔딩멘트 1
 		공백();
 		ImageOutputExample.환경파괴();
 		공백();
@@ -431,15 +431,15 @@ public class Battle {
 
 		System.out.print("Enter를 누르세요.");
 		n = in.nextLine();
-		end2();
+		end2();//엔딩멘트2
 
-		System.out.println("전체 플레이 타임: " + Time.allTime);
+		System.out.println("전체 플레이 타임: " + Time.allTime);//플레이 타임과 최종 스탯을 
 		Print.printBar();
 		new ShowStatus();
 		new ShowInventory();
 		공백();
 
-		System.exit(0);
+		System.exit(0);//
 	}
 }
 
