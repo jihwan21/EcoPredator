@@ -1,5 +1,5 @@
 package TeamProject;
-
+//게임 시각화를 위한 프린트 클래스 //메서드들은 전부 전역으로 설정
 public class Print {
 	public static void printMain() {
 		System.out.println(
