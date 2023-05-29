@@ -28,23 +28,23 @@ public class main {
 		System.out.println("");
 		
 		if(char_choice == 1) {
-			System.out.println("모기를 선택했습니다.");
+			System.out.println("모기를 선택했습니다.\n");
 			Player.p = new Mosquito(3,1);
 		}
 		else if(char_choice == 2) {
-			System.out.println("하루살이를 선택했습니다.");
+			System.out.println("하루살이를 선택했습니다.\n");
 			Player.p = new Mayfly(3,1);
 		}
 		else if(char_choice == 3) {
-			System.out.println("바퀴벌레를 선택했습니다.");
+			System.out.println("바퀴벌레를 선택했습니다.\n");
 			Player.p = new Roach(3,1);
 		}
 		else if(char_choice == 4) {
-			System.out.println("나비를 선택했습니다.");
+			System.out.println("나비를 선택했습니다.\n");
 			Player.p = new Butterfly(3,1);
 		}
 		else if(char_choice == 5) {
-			System.out.println("꿀벌을 선택했습니다.");
+			System.out.println("꿀벌을 선택했습니다.\n");
 			Player.p = new Honeybee(3,1);
 		}
 
