@@ -9,7 +9,7 @@ import javax.swing.JLabel;
 import javax.swing.SwingUtilities;
 import javax.swing.Timer;
 
-public class ImageOutputExample {
+public class ImageOutputExample {//이미지 불러오는 클래스
 	
 	public static void 사람눈() {
 		// 이미지 파일 경로
@@ -32,8 +32,8 @@ public class ImageOutputExample {
 		int y = (screenSize.height - frame.getHeight()) / 2;
 		frame.setLocation(x, y);
 
-		// 타이머 설정 (5초 후에 창 닫기)
-		int delay = 4000; // 밀리초 단위, 여기서는 5초
+		// 타이머 설정 (4초 후에 창 닫기)
+		int delay = 4000; // 밀리초 단위, 여기서는 4초뒤에 창 닫기
 		Timer timer = new Timer(delay, e -> {
 			SwingUtilities.invokeLater(() -> {
 				frame.dispose(); // 창 닫기
@@ -66,8 +66,8 @@ public class ImageOutputExample {
 		int y = (screenSize.height - frame.getHeight()) / 2;
 		frame.setLocation(x, y);
 
-		// 타이머 설정 (5초 후에 창 닫기)
-		int delay = 2000; // 밀리초 단위, 여기서는 5초
+		// 타이머 설정 (2초 후에 창 닫기)
+		int delay = 2000; // 밀리초 단위, 여기서는 2초
 		Timer timer = new Timer(delay, e -> {
 			SwingUtilities.invokeLater(() -> {
 				frame.dispose(); // 창 닫기
@@ -100,8 +100,8 @@ public class ImageOutputExample {
 		int y = (screenSize.height - frame.getHeight()) / 2;
 		frame.setLocation(x, y);
 
-		// 타이머 설정 (3초 후에 창 닫기)
-		int delay = 2000; // 밀리초 단위, 여기서는 3초
+		// 타이머 설정 (2초 후에 창 닫기)
+		int delay = 2000; // 밀리초 단위, 여기서는 2초
 		Timer timer = new Timer(delay, e -> {
 			SwingUtilities.invokeLater(() -> {
 				frame.dispose(); // 창 닫기
