@@ -704,14 +704,7 @@ public class Exploration {
 			}
 			break;
 		}
-		case 7: {
-			System.out.println("??? 지역에 입장했습니다.");
-			System.out.println("??? 영역에 들어왔습니다.");
-			Human m1 = new Human();
-			Battle.battleEnding(m1);
-			System.exit(0);
-			break;
-		}
+
 		}
 	}
 }
