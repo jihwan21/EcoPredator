@@ -3,6 +3,8 @@ package TeamProject;
 import java.util.Scanner;
 
 public class Exploration {
+	static int Seoul_clear = 0, Gangwon_clear = 0, Chungcheong_clear = 0, Jeolla_clear = 0, Gyeongsang_clear = 0;
+	
 	int area;
 	String 모기, 거미, 쥐, 고양이, 얼룩말, 붕어, 악어거북, 수달, 박쥐, 비둘기, 황조롱이, 다람쥐, 산양, 호랑이, 우럭, 오징어, 상어, 꾀꼬리, 부엉이, 독수리, 멧돼지, 쏘가리, 뉴트리아,
 			물총새, 두루미, 매, 구렁이, 세발낙지, 복어, 귀신고래, 고추잠자리, 제비, 백조, 하늘다람쥐, 노루, 반달가슴곰, 가오리, 전기뱀장어, 범고래, 갈매기, 알바트로스, 펠리컨, 렌트카,
@@ -121,7 +123,6 @@ public class Exploration {
 	public void exploration() {
 		Scanner in = new Scanner(System.in);
 
-		int Seoul_clear = 0, Gangwon_clear = 0, Chungcheong_clear = 0, Jeolla_clear = 0, Gyeongsang_clear = 0;
 		// 지역 선택 -----------------------------------------------------
 
 		System.out.println("----- <탐험 지역> -----");
