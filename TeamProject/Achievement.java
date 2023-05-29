@@ -2,11 +2,14 @@ package TeamProject;
 
 import java.util.Scanner;
 
+// 몬스터 클래스를 배열로 선언하기 위한 클래스
 class ClassArray {
 	Monster m;
 }
 
+// 업적 클래스
 public class Achievement {
+	// 업적 관리를 위한 전체 몬스터 객체 생성(업적 관리용)
 	static Mosquito Mosquito = new Mosquito(1, 1);
 	static Mayfly Mayfly = new Mayfly(1, 1);
 	static Roach Roach = new Roach(1, 1);
@@ -66,6 +69,7 @@ public class Achievement {
 	static Cat Cat4 = new Cat(1, 4);
 	static Tiger Tiger4 = new Tiger(1, 4);
 
+	// 위에서 만든 업적 관리를 위한 몬스터 클래스들을 객체 배열에 할당
 	static ClassArray[] classList = new ClassArray[51];
 	{
 		for (int i = 0; i < 51; i++) {
@@ -124,7 +128,7 @@ public class Achievement {
 		classList[50].m = Human;
 	}
 
-	// tribe에 해당하는 몬스터 업적 count 증가
+	// 몬스터 이름(tribe)에 해당하는 몬스터 업적 count 증가, 몬스터 처치 시 해당 메서드 실행
 	static void count(String tribe) {
 		for (int i = 0; i < 51; i++) {
 			if (classList[i].m.tribe == tribe)
@@ -135,21 +139,21 @@ public class Achievement {
 	// 진화 가능한 몬스터 목록 출력
 	void print_evolution_list() {
 		Scanner in = new Scanner(System.in);
-		int flag = 0;
+		int flag = 0; // 업적 달성한 몬스터가 하나라도 있는지 판단하기 위한 변수
 		System.out.println("----- <진화 가능한 몬스터 목록> -----");
 		for (int i = 0; i < 51; i++) { // i 범위 = 몬스터 수
 			if (classList[i].m.count >= 10) { // 업적 달성도 10이상인 경우 진화 가능한 몬스터로 출력
-				flag = 1;
-				System.out.printf("%d. %s\n", i, classList[i].m.tribe);
+				flag = 1; // 업적 달성한 몬스터가 있으니 1로 변경
+				System.out.printf("%d. %s\n", i, classList[i].m.tribe); // 업적 달성한 몬스터 = 진화 가능한 몬스터 리스트 출력
 			}
 		}
-		if (flag == 0) {
+		if (flag == 0) { // 업적 달성한 몬스터가 하나도 없는 경우
 			System.out.println("업적이 달성된 몬스터가 없어 진화가 불가능합니다.");
 		} else if (flag == 1) {
 			System.out.println("진화할 몬스터 번호를 선택해주세요!");
 			System.out.print("선택 : ");
 			int monster_num = in.nextInt();
-			Player.p = classList[monster_num].m;
+			Player.p = classList[monster_num].m; // 선택한 몬스터로 진화, 진화한 몬스터의 능력치를 플레이어에게 전수하는 과정
 			System.out.println(classList[monster_num].m.tribe + "로 진화하였습니다.");
 		}
 	}
@@ -163,6 +167,7 @@ public class Achievement {
 		System.out.println();
 	}
 
+	// main 출력 부분
 	void process() {
 		Scanner in = new Scanner(System.in);
 
