@@ -21,7 +21,7 @@ public class Battle {
 			System.out.print("█");
 
 		System.out.println("\n");
-		System.out.print(m1.tribe + "체력 |");
+		System.out.print(m1.tribe + "의 체력 |");
 		int i = 1;
 		for (i = 1; i <= (int) (((float) m1.hp / (float) m1.hpMax) * 71); i++) {
 			System.out.print(blueHeart);
@@ -30,7 +30,7 @@ public class Battle {
 			System.out.print(blankS);
 		System.out.printf("|%d/%d\n", m1.hp, m1.hpMax);
 
-		System.out.print(m1.tribe + "공격력|");
+		System.out.print(m1.tribe + "의 공격력|");
 //		for (i = 1; i <= (int) ((float) m1.attack / N * N1); i++) {
 //			if (0 == i % 116)
 //				System.out.println();
@@ -38,7 +38,7 @@ public class Battle {
 //		}
 		System.out.printf("|%d\n", m1.attack);
 
-		System.out.print(m1.tribe + "방어력|");
+		System.out.print(m1.tribe + "의 방어력|");
 //		for (i = 1; i <= (int) ((float) m1.defense / N * N1); i++) {
 //			if (0 == i % 116)
 //				System.out.println();
@@ -46,7 +46,7 @@ public class Battle {
 //		}
 		System.out.printf("|%d\n\n", m1.defense);
 //==========================================================================================
-		System.out.print(Player.name + "체력 |");
+		System.out.print(Player.name + "의 체력 |");
 		for (i = 1; i <= (int) (((float) m2.hp / (float) m2.hpMax) * 71); i++) {
 			System.out.print(blueHeart);
 		}
@@ -54,7 +54,7 @@ public class Battle {
 			System.out.print(blankS);
 		System.out.printf("|%d/%d\n", m2.hp, m2.hpMax);
 
-		System.out.print(Player.name + "공격력|");
+		System.out.print(Player.name + "의 공격력|");
 //		for (i = 1; i <= (int) ((float) m2.attack / N * N1); i++) {
 //			if (0 == i % 116)
 //				System.out.println();
@@ -62,7 +62,7 @@ public class Battle {
 //		}
 		System.out.printf("|%d\n", m2.attack);
 
-		System.out.print(Player.name + "방어력|");
+		System.out.print(Player.name + "의 방어력|");
 //		for (i = 1; i <= (int) ((float) m2.defense / N * N1); i++) {
 //			if (0 == i % 116)
 //				System.out.println();
