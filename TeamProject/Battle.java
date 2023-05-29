@@ -9,7 +9,7 @@ public class Battle {
 			System.out.println();
 	}
 
-	private static void printHp(Monster m1, Monster m2) {
+	private static void printHp(Monster m1, Monster m2) {//체력바와 공격력, 방어력을 보여주는 메서드
 		int N = 1000, N1 = 100;// 수치
 
 		String blueHeart = "🟥";// 🔲
@@ -18,15 +18,15 @@ public class Battle {
 		String attack = "🜸";
 
 		for (int k = 0; k < 150; k++)
-			System.out.print("█");
+			System.out.print("█");//상단 구분선 생성
 
 		System.out.println("\n");
-		System.out.print(m1.tribe + "의 체력 |");
+		System.out.print(m1.tribe + "의 체력 |");//몬스터의 체력
 		int i = 1;
 		for (i = 1; i <= (int) (((float) m1.hp / (float) m1.hpMax) * 71); i++) {
-			System.out.print(blueHeart);
+			System.out.print(blueHeart);//현재 체력 만큼 붉은색 박스 생성
 		}
-		for (int j = i + 1; j <= 71 + 1; j++)
+		for (int j = i + 1; j <= 71 + 1; j++)//잃은 체력은 빈 박스로 표시
 			System.out.print(blankS);
 		System.out.printf("|%d/%d\n", m1.hp, m1.hpMax);
 
@@ -74,26 +74,26 @@ public class Battle {
 	}
 
 	//🟰🟰🟰🟰🟰🟰🟰🟰🟰🟰🟰🟰🟰🟰🟰🟰🟰🟰🟰🟰🟰🟰🟰🟰🟰🟰🟰🟰🟰🟰🟰🟰🟰🟰🟰🟰🟰🟰🟰🟰🟰🟰🟰🟰🟰🟰🟰🟰🟰🟰🟰🟰🟰🟰🟰🟰🟰🟰🟰🟰🟰🟰🟰🟰
-		public static void battle(Monster m1, Monster m2, Achievement ach) {// 배틀 메서드
+		public static void battle(Monster m1, Monster m2, Achievement ach) {// 배틀 메서드 몬스터 객체를 받아와서 실행
 			Random random = new Random();
 			Scanner in = new Scanner(System.in);
 			System.out.println("\n" + m1.tribe + "와의 전투를 시작합니다.\n");
 
-			if (Player.a != null)
-				Player.a.use();
+			if (Player.a != null)//갑옷과 투구가 있으면 사용하고 시작
+				Player.a.use();//갑옷 아이템 사용//플레이어 방어력 증가
 			if (Player.h != null)
 				Player.h.use();
 			int select;
-			Monster m = Player.p;
+			Monster m = Player.p;//플레이어의 몬스터 객체 복사
 			int attack_copy = m.attack;
 			int defense_copy = m.defense;
-			int demage = 0;
+			int demage = 0;//데미지 변수 초기화
 
 			while (true) {
-				if (m.기절상태 == 0) {
-					printHp(m1, Player.p);
+				if (m.기절상태 == 0) {//기절상태 변수가 0이면 턴 실행
+					printHp(m1, Player.p);//체력바 보여주는 메서드 사용
 					System.out.println("----- <공격턴> -----");
-					m.skill_info();
+					m.skill_info();//몬스터 스킬정보 보여주기
 					System.out.println("4. 공격 전략적 선택지 사용(25% 확률로 개방)");
 					System.out.println("5. 가방");
 					System.out.println("6. 스탯");
