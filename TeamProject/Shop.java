@@ -91,7 +91,6 @@ class Shop extends Item {
 			Player.pMoney -= i.price * num;//구매시 돈 
 		}
 		System.out.println("사용한 돈 : " + i.price * num + "G");
-		System.out.println(i.name + "구매완료\n");
 	}
 
 }
