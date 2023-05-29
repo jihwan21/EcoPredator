@@ -3,16 +3,20 @@ package TeamProject;
 import java.util.Scanner;
 
 public class Exploration {
+	// 지역 몬스터 모두 사냥했을 경우 구별 변수
 	static int Seoul_clear = 0, Gangwon_clear = 0, Chungcheong_clear = 0, Jeolla_clear = 0, Gyeongsang_clear = 0,
 			Jeju_clear = 0;
-
+	
+	// 영역 선택 변수(지상, 수중, 공중)
 	int area;
+	
+	// 전투 가능한 몬스터 목록 출력을 위한 변수
 	String 모기, 거미, 쥐, 고양이, 얼룩말, 붕어, 악어거북, 수달, 박쥐, 비둘기, 황조롱이, 다람쥐, 산양, 호랑이, 우럭, 오징어, 상어, 꾀꼬리, 부엉이, 독수리, 멧돼지, 쏘가리, 뉴트리아,
 			물총새, 두루미, 매, 구렁이, 세발낙지, 복어, 귀신고래, 고추잠자리, 제비, 백조, 하늘다람쥐, 노루, 반달가슴곰, 가오리, 전기뱀장어, 범고래, 갈매기, 알바트로스, 펠리컨, 렌트카,
 			관광용잠수함, 제주항공여객기, 인간;
 	private Achievement ach;
 
-// 영역 선택 매서드------------------------------------------`----------
+// 서울 지역을 제외한 영역 선택 매서드  -- 지상 선택 
 	public int area_choice() {
 		Scanner in = new Scanner(System.in);
 		System.out.println("----- <진입 가능 영역> -----");
@@ -38,7 +42,7 @@ public class Exploration {
 		return area;
 	}
 
-// 영역 선택 매서드(서울만 해당)----------------------------------------------------
+// 서울 지역의 영역 선택 매서드 -- 지상 선택 
 	public int area_choice2() {
 		Scanner in = new Scanner(System.in);
 		System.out.println("----- <진입 가능 영역> -----");
@@ -59,7 +63,7 @@ public class Exploration {
 		return area;
 	}
 
-// 스테이지 선택 매서드1----------------------------------------------------
+// 스테이지 선택 매서드 -- 사냥 가능 몬스터 1마리
 	public int stage_choice(String a) {
 		Scanner in = new Scanner(System.in);
 		System.out.println("----- <스테이지 선택> -----");
@@ -69,7 +73,7 @@ public class Exploration {
 		return stage;
 	}
 
-// 스테이지 선택 매서드1----------------------------------------------------
+// 스테이지 선택 매서드 -- 사냥 가능 몬스터 3마리
 	public int stage_choice(String a, String b, String c) {
 		Scanner in = new Scanner(System.in);
 		System.out.println("----- <스테이지 선택> -----");
@@ -81,7 +85,7 @@ public class Exploration {
 		return stage;
 	}
 
-// 스테이지 선택 매서드2----------------------------------------------------
+// 스테이지 선택 매서드 -- 사냥 가능 몬스터 5마리
 	public int stage_choice(String a, String b, String c, String d, String e) {
 		Scanner in = new Scanner(System.in);
 		System.out.println("----- <스테이지 선택> -----");
@@ -95,7 +99,7 @@ public class Exploration {
 		return stage;
 	}
 
-// 해당 지역 clear 여부 판단 메서드1-----------------------------------------
+// 해당 지역 clear 여부 판단 메서드 -- 1마리일 경우
 	public int judgment_clear(Monster m1) {
 		int all_clear = 0;
 		if (m1.clear == 1)
@@ -103,7 +107,7 @@ public class Exploration {
 		return all_clear;
 	}
 
-// 해당 지역 clear 여부 판단 메서드2-----------------------------------------
+// 해당 지역 clear 여부 판단 메서드 -- 3마리일 경우
 	public int judgment_clear(Monster m1, Monster m2, Monster m3) {
 		int all_clear = 0;
 		if (m1.clear == 1 && m2.clear == 1 && m3.clear == 1)
@@ -111,7 +115,7 @@ public class Exploration {
 		return all_clear;
 	}
 
-// 해당 지역 clear 여부 판단 메서드3-----------------------------------------
+// 해당 지역 clear 여부 판단 메서드 -- 5마리일 경우
 	public int judgment_clear(Monster m1, Monster m2, Monster m3, Monster m4, Monster m5) {
 		int all_clear = 0;
 		if (m1.clear == 1 && m2.clear == 1 && m3.clear == 1 && m4.clear == 1 & m5.clear == 1) {
@@ -124,40 +128,49 @@ public class Exploration {
 	public void exploration() {
 		Scanner in = new Scanner(System.in);
 
-		// 지역 선택 -----------------------------------------------------
-
+		// 지역 선택
 		System.out.println("----- <탐험 지역> -----");
 		System.out.println("1. 서울");
+		
 		// 서울 육,해,공 모든 스테이지 클리어 시 강원도, 충청도 탐험 가능
 		if (judgment_clear(Achievement.Mosquito, Achievement.Spider, Achievement.Mouse, Achievement.Cat,
 				Achievement.Zebra) == 1
 				&& judgment_clear(Achievement.Carp, Achievement.Alligator_turtle, Achievement.Otter) == 1
 				&& judgment_clear(Achievement.Bat, Achievement.Pigeon, Achievement.Kestrel) == 1) {
-			Seoul_clear = 1; // 서울 모든 스테이지 클리어 check
+			
+			// 서울 모든 스테이지 클리어 check
+			Seoul_clear = 1; 
 			System.out.println("2. 강원도");
 			System.out.println("3. 충청도");
 		} else {
 			System.out.println("2. 강원도(접근 불가능)");
 			System.out.println("3. 충청도(접근 불가능)");
 		}
+		
 		// 충청도 육,해,공 모든 스테이지 클리어 시 전라도 탐험 가능
 		if (judgment_clear(Achievement.Mouse3, Achievement.Cat3, Achievement.Boar) == 1
 				&& judgment_clear(Achievement.Carp2, Achievement.Mandarin_fish, Achievement.Nutria) == 1
 				&& judgment_clear(Achievement.Kingfisher, Achievement.Crane, Achievement.Falcon) == 1) {
-			Chungcheong_clear = 1; // 충청도 모든 스테이지 클리어 check
+			
+			// 충청도 모든 스테이지 클리어 check
+			Chungcheong_clear = 1; 
 			System.out.println("4. 전라도");
 		} else {
 			System.out.println("4. 전라도(접근 불가능)");
 		}
+		
 		// 강원도 육,해,공 모든 스테이지 클리어 시 경상도 탐험 가능
 		if (judgment_clear(Achievement.Squirrel, Achievement.Goat, Achievement.Tiger) == 1
 				&& judgment_clear(Achievement.RockFish, Achievement.Squid, Achievement.Shark) == 1
 				&& judgment_clear(Achievement.Nightingale, Achievement.Owl, Achievement.Eagle) == 1) {
-			Gangwon_clear = 1; // 강원도 모든 스테이지 클리어 check
+			
+			// 강원도 모든 스테이지 클리어 check
+			Gangwon_clear = 1; 
 			System.out.println("5. 경상도");
 		} else {
 			System.out.println("5. 경상도(접근 불가능)");
 		}
+		
 		// 서울, 강원도, 충청도, 경상도, 전라도 육,해,공 모든 스테이지 클리어 시 제주도 탐험 가능
 		if (judgment_clear(Achievement.Flying_Squirrel, Achievement.Deer, Achievement.Thibetanus) == 1
 				&& judgment_clear(Achievement.Ray, Achievement.Electric_ell, Achievement.Orca) == 1
@@ -165,8 +178,11 @@ public class Exploration {
 				&& judgment_clear(Achievement.Mouse4, Achievement.Snake, Achievement.Tiger4) == 1
 				&& judgment_clear(Achievement.Raw_Octopus, Achievement.BlowFish, Achievement.Gray_Whale) == 1
 				&& judgment_clear(Achievement.Red_Dragonfly, Achievement.Swallow, Achievement.Swan) == 1) {
-			Jeolla_clear = 1; // 전라도 모든 스테이지 클리어 check
-			Gyeongsang_clear = 1; // 경상도 모든 스테이지 클리어 check
+			
+			// 전라도 모든 스테이지 클리어 check
+			// 경상도 모든 스테이지 클리어 check
+			Jeolla_clear = 1; 
+			Gyeongsang_clear = 1; 
 			System.out.println("6. 제주도");
 		} else {
 			System.out.println("6. 제주도(접근 불가능)");
@@ -176,8 +192,7 @@ public class Exploration {
 			Jeju_clear = 1;
 		}
 
-// 지역별 영역 선택-------------------------------------------------------------------------
-
+		// 지역별 영역 선택
 		System.out.print("탐험 지역을 선택하세요. ");
 		int location = in.nextInt();
 
