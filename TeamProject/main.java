@@ -9,8 +9,14 @@ public class main {
 
 	public static void main(String[] args) { // game start
 		Scanner in = new Scanner(System.in);
-
+		
+		Print.printMain();
 		// 캐릭터 생성 및 선택
+		System.out.print("캐릭터 이름을 작성하세요: ");
+		Player.name = in.next();
+		
+		System.out.println("플레이어의 이름은 \"" + Player.name + "\"입니다.");
+		
 		System.out.println("초기 캐릭터");
 		System.out.println("1. 모기");
 		System.out.println("2. 하루살이");
@@ -41,11 +47,6 @@ public class main {
 			System.out.println("꿀벌을 선택했습니다.");
 			Player.p = new Honeybee(3,1);
 		}
-		
-		
-		//Player.p = new Mosquito(3, 1);// ==============================================================================전투를
-										// 위해 임의로 3레벨 모기로 플레이어 설정
-		// 게임 메뉴 루프
 
 		while (true) {
 			Print.printMain();// =========================================================================================메인
