@@ -120,6 +120,8 @@ public class Exploration {
 	// 탐험 진행 메서드
 	public void exploration() {
 		Scanner in = new Scanner(System.in);
+
+		int Seoul_clear = 0, Gangwon_clear = 0, Chungcheong_clear = 0, Jeolla_clear = 0, Gyeongsang_clear = 0;
 		// 지역 선택 -----------------------------------------------------
 
 		System.out.println("----- <탐험 지역> -----");
@@ -129,6 +131,7 @@ public class Exploration {
 				Achievement.Zebra) == 1
 				&& judgment_clear(Achievement.Carp, Achievement.Alligator_turtle, Achievement.Otter) == 1
 				&& judgment_clear(Achievement.Bat, Achievement.Pigeon, Achievement.Kestrel) == 1) {
+			Seoul_clear = 1; // 서울 모든 스테이지 클리어 check
 			System.out.println("2. 강원도");
 			System.out.println("3. 충청도");
 		} else {
@@ -139,6 +142,7 @@ public class Exploration {
 		if (judgment_clear(Achievement.Mouse3, Achievement.Cat3, Achievement.Boar) == 1
 				&& judgment_clear(Achievement.Carp2, Achievement.Mandarin_fish, Achievement.Nutria) == 1
 				&& judgment_clear(Achievement.Kingfisher, Achievement.Crane, Achievement.Falcon) == 1) {
+			Chungcheong_clear = 1; // 충청도 모든 스테이지 클리어 check
 			System.out.println("4. 전라도");
 		} else {
 			System.out.println("4. 전라도(접근 불가능)");
@@ -147,6 +151,7 @@ public class Exploration {
 		if (judgment_clear(Achievement.Squirrel, Achievement.Goat, Achievement.Tiger) == 1
 				&& judgment_clear(Achievement.RockFish, Achievement.Squid, Achievement.Shark) == 1
 				&& judgment_clear(Achievement.Nightingale, Achievement.Owl, Achievement.Eagle) == 1) {
+			Gangwon_clear = 1; // 강원도 모든 스테이지 클리어 check
 			System.out.println("5. 경상도");
 		} else {
 			System.out.println("5. 경상도(접근 불가능)");
@@ -158,6 +163,8 @@ public class Exploration {
 				&& judgment_clear(Achievement.Mouse4, Achievement.Snake, Achievement.Tiger4) == 1
 				&& judgment_clear(Achievement.Raw_Octopus, Achievement.BlowFish, Achievement.Gray_Whale) == 1
 				&& judgment_clear(Achievement.Red_Dragonfly, Achievement.Swallow, Achievement.Swan) == 1) {
+			Jeolla_clear = 1; // 전라도 모든 스테이지 클리어 check
+			Gyeongsang_clear = 1; // 경상도 모든 스테이지 클리어 check
 			System.out.println("6. 제주도");
 		} else {
 			System.out.println("6. 제주도(접근 불가능)");
@@ -261,6 +268,10 @@ public class Exploration {
 		}
 
 		case 2: {
+			if (Seoul_clear == 0) {
+				System.out.println(">> 현재 접근할 수 없는 지역입니다.");
+				break;
+			}
 			System.out.println(">> 강원도 지역을 선택했습니다.");
 			System.out.println();
 			area = area_choice();
@@ -337,6 +348,10 @@ public class Exploration {
 		}
 
 		case 3: {
+			if (Seoul_clear == 0) {
+				System.out.println(">> 현재 접근할 수 없는 지역입니다.");
+				break;
+			}
 			System.out.println("충청도 지역을 선택했습니다.");
 			System.out.println();
 			area = area_choice();
@@ -413,6 +428,10 @@ public class Exploration {
 		}
 
 		case 4: {
+			if (Chungcheong_clear == 0) {
+				System.out.println(">> 현재 접근할 수 없는 지역입니다.");
+				break;
+			}
 			System.out.println("전라도 지역을 선택했습니다.");
 			System.out.println();
 			area = area_choice();
@@ -488,6 +507,10 @@ public class Exploration {
 			break;
 		}
 		case 5: {
+			if (Gangwon_clear == 0) {
+				System.out.println(">> 현재 접근할 수 없는 지역입니다.");
+				break;
+			}
 			System.out.println("경상도 지역을 선택했습니다.");
 			System.out.println();
 			area = area_choice();
@@ -564,6 +587,10 @@ public class Exploration {
 		}
 
 		case 6: {
+			if (Jeolla_clear == 0 || Gyeongsang_clear == 0) {
+				System.out.println(">> 현재 접근할 수 없는 지역입니다.");
+				break;
+			}
 			System.out.println("제주도 지역을 선택했습니다.");
 			System.out.println();
 			area = area_choice();
