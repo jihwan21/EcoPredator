@@ -37,7 +37,7 @@ public class ShowStatus extends JFrame {
 			data[2][0] = "방어력";
 			data[2][1] = Integer.toString(Player.p.defense) + "(+"
 					+ Integer.toString(Player.h.defense + Player.h.reinforceN + Player.a.defense + Player.a.reinforceN)
-					+ ")";
+					+ ")";//플레이어의 방어력에 갑옷과 투구의 방어력을 추가한 
 			data[2][2] = "||||||||||||||||||||||||||||||";
 
 		} else if (Player.투구N != 0 && Player.갑옷N == 0) {
@@ -79,11 +79,11 @@ public class ShowStatus extends JFrame {
 		data[7][2] = "||||||||||||||||||||||||||||||";
 
 		data[8][0] = "종족";
-		data[8][1] = Player.p.tribe;
+		data[8][1] = Player.p.tribe;//플레이어가 가지고 있는 전역 몬스터 객체의  가져와서 표시
 		data[8][2] = "||||||||||||||||||||||||||||||";
 
 		data[9][0] = "이름";
-		data[9][1] = Player.name;
+		data[9][1] = Player.name;//플레이어 이름변수 표시
 		data[9][2] = "||||||||||||||||||||||||||||||";
 
 		table = new JTable(data, title);
