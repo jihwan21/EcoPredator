@@ -3,8 +3,9 @@ package TeamProject;
 import java.util.Scanner;
 
 public class Exploration {
-	static int Seoul_clear = 0, Gangwon_clear = 0, Chungcheong_clear = 0, Jeolla_clear = 0, Gyeongsang_clear = 0;
-	
+	static int Seoul_clear = 0, Gangwon_clear = 0, Chungcheong_clear = 0, Jeolla_clear = 0, Gyeongsang_clear = 0,
+			Jeju_clear = 0;
+
 	int area;
 	String 모기, 거미, 쥐, 고양이, 얼룩말, 붕어, 악어거북, 수달, 박쥐, 비둘기, 황조롱이, 다람쥐, 산양, 호랑이, 우럭, 오징어, 상어, 꾀꼬리, 부엉이, 독수리, 멧돼지, 쏘가리, 뉴트리아,
 			물총새, 두루미, 매, 구렁이, 세발낙지, 복어, 귀신고래, 고추잠자리, 제비, 백조, 하늘다람쥐, 노루, 반달가슴곰, 가오리, 전기뱀장어, 범고래, 갈매기, 알바트로스, 펠리컨, 렌트카,
@@ -171,6 +172,10 @@ public class Exploration {
 			System.out.println("6. 제주도(접근 불가능)");
 		}
 
+		if (judgment_clear(Achievement.RentCar, Achievement.Submarine, Achievement.JEJU_airline_plane) == 1) {
+			Jeju_clear = 1;
+		}
+
 // 지역별 영역 선택-------------------------------------------------------------------------
 
 		System.out.print("탐험 지역을 선택하세요. ");
@@ -220,6 +225,10 @@ public class Exploration {
 				}
 			}
 			if (area == 2) {
+				if (Player.아가미N == 0) {
+					System.out.println("특수장비 <아가미>가 없어서 접근이 불가합니다.");
+					break;
+				}
 				System.out.println("한강(수중) 영역에 들어왔습니다.");
 
 				int stage = stage_choice("붕어", "악어거북", "수달");
@@ -243,6 +252,10 @@ public class Exploration {
 				}
 			}
 			if (area == 3) {
+				if (Player.날개N == 0) {
+					System.out.println("특수장비 <날개>가 없어서 접근이 불가합니다.");
+					break;
+				}
 				System.out.println("남산타워(공중) 영역에 들어왔습니다.");
 
 				int stage = stage_choice("박쥐", "비둘기", "황조롱이");
@@ -300,6 +313,10 @@ public class Exploration {
 				}
 			}
 			if (area == 2) {
+				if (Player.아가미N == 0) {
+					System.out.println("특수장비 <아가미>가 없어서 접근이 불가합니다.");
+					break;
+				}
 				System.out.println("강릉 경포대(수중) 영역에 들어왔습니다.");
 
 				int stage = stage_choice("우럭", "오징어", "상어");
@@ -323,6 +340,10 @@ public class Exploration {
 				}
 			}
 			if (area == 3) {
+				if (Player.날개N == 0) {
+					System.out.println("특수장비 <날개>가 없어서 접근이 불가합니다.");
+					break;
+				}
 				System.out.println("백두산부대 GOP(공중) 영역에 들어왔습니다.");
 
 				int stage = stage_choice("꾀꼬리", "부엉이", "독수리");
@@ -380,6 +401,10 @@ public class Exploration {
 				}
 			}
 			if (area == 2) {
+				if (Player.아가미N == 0) {
+					System.out.println("특수장비 <아가미>가 없어서 접근이 불가합니다.");
+					break;
+				}
 				System.out.println("충주호(수중) 영역에 들어왔습니다.");
 
 				int stage = stage_choice("우럭", "오징어", "상어");
@@ -403,6 +428,10 @@ public class Exploration {
 				}
 			}
 			if (area == 3) {
+				if (Player.날개N == 0) {
+					System.out.println("특수장비 <날개>가 없어서 접근이 불가합니다.");
+					break;
+				}
 				System.out.println("탄금호철새조망대(공중) 영역에 들어왔습니다.");
 
 				int stage = stage_choice("물총새", "두루미", "매");
@@ -460,6 +489,10 @@ public class Exploration {
 				}
 			}
 			if (area == 2) {
+				if (Player.아가미N == 0) {
+					System.out.println("특수장비 <아가미>가 없어서 접근이 불가합니다.");
+					break;
+				}
 				System.out.println("목포 앞바다(수중) 영역에 들어왔습니다.");
 
 				int stage = stage_choice("세발낙지", "복어", "귀신고래");
@@ -483,6 +516,10 @@ public class Exploration {
 				}
 			}
 			if (area == 3) {
+				if (Player.날개N == 0) {
+					System.out.println("특수장비 <날개>가 없어서 접근이 불가합니다.");
+					break;
+				}
 				System.out.println("나주평야(공중) 영역에 들어왔습니다.");
 
 				int stage = stage_choice("고추잠자리", "제비", "백조");
@@ -539,6 +576,10 @@ public class Exploration {
 				}
 			}
 			if (area == 2) {
+				if (Player.아가미N == 0) {
+					System.out.println("특수장비 <아가미>가 없어서 접근이 불가합니다.");
+					break;
+				}
 				System.out.println("부산 아쿠아리움(수중) 영역에 들어왔습니다.");
 
 				int stage = stage_choice("가오리", "전기뱀장어", "범고래");
@@ -562,6 +603,10 @@ public class Exploration {
 				}
 			}
 			if (area == 3) {
+				if (Player.날개N == 0) {
+					System.out.println("특수장비 <날개>가 없어서 접근이 불가합니다.");
+					break;
+				}
 				System.out.println("오륙도스카이워크(공중) 영역에 들어왔습니다.");
 
 				int stage = stage_choice("갈매기", "알바트로스", "펠리컨");
@@ -609,6 +654,10 @@ public class Exploration {
 				}
 			}
 			if (area == 2) {
+				if (Player.아가미N == 0) {
+					System.out.println("특수장비 <아가미>가 없어서 접근이 불가합니다.");
+					break;
+				}
 				System.out.println("서귀포 앞바다(수중) 영역에 들어왔습니다.");
 
 				int stage = stage_choice("관광용잠수함");
@@ -622,6 +671,10 @@ public class Exploration {
 				}
 			}
 			if (area == 3) {
+				if (Player.날개N == 0) {
+					System.out.println("특수장비 <날개>가 없어서 접근이 불가합니다.");
+					break;
+				}
 				System.out.println("제주공항(공중) 영역에 들어왔습니다.");
 
 				int stage = stage_choice("제주항공여객기");
