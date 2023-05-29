@@ -6,7 +6,7 @@ class Shop extends Item {
 	private UseItem HpPotion, MpPotion, Grenade;
 	private Equipment 아가미, 날개, 어항, Headpiece, Armor;
 	private Gaho 가호;
-
+	//판매용 아이템 객체를성생성
 	Shop() {
 		this.HpPotion = new HpPotion();
 		this.MpPotion = new MpPotion();
@@ -29,7 +29,7 @@ class Shop extends Item {
 		System.out.println("구매할 품목을 선택해주세요.");
 		showItemList();
 		int s = in.nextInt(), num = 1;
-		if (s == 1 || s == 2 || s == 3) {
+		if (s == 1 || s == 2 || s == 3) {//여러개를 살수있는 아이템은 구매 수량도 
 			System.out.println("구매 수량을 선택해 주세요.");
 			num = in.nextInt();
 		}
@@ -65,14 +65,14 @@ class Shop extends Item {
 			Player.어항N += num * 10;
 		} else if (s == 9) {
 			purchase(가호, num);
-			가호.use();
+			가호.use();//가호는 구매시 바로 사용
 		} else
 			System.out.println("상점에서 나갑니다.");
 		new ShowInventory();
 	}
 
-	private void showItemList() {
-		System.out.println("1.HP포션: " + HpPotion.price + "G");
+	private void showItemList() {//판매목록을 보여주는 
+		System.out.println("1.HP포션: " + HpPotion.price + "G");//아이템 객체의 가격변수를 가져와 표시해줌
 		System.out.println("2.MP포션: " + MpPotion.price + "G");
 		System.out.println("3.수류탄: " + Grenade.price + "G");
 		System.out.println("4.투구: " + Headpiece.price + "G");
@@ -85,10 +85,10 @@ class Shop extends Item {
 	}
 
 	private void purchase(Item i, int num) {// 아이템과 구매수량
-		if ((i.price * num) > Player.pMoney)
+		if ((i.price * num) > Player.pMoney)//돈이 부족하면 구매 불가
 			System.out.println("돈이 부족합니다.");
 		else {
-			Player.pMoney -= i.price * num;
+			Player.pMoney -= i.price * num;//구매시 돈 
 		}
 		System.out.println("사용한 돈 : " + i.price * num + "G");
 		System.out.println(i.name + "구매완료\n");
