@@ -1,11 +1,19 @@
 package TeamProject;
 
 class Monster extends Time {
+	// 종족
 	String tribe;
+	
+	// 레벨, 공격력, 방어력, 돈, 체력, 최대체력, 마나, 최대마나, 경험치
 	int level, power, defense, money, hp, hpMax, mp, mpMax, exp;
-	// 체력/최대체력, 마나/최대마나
+	
+	// 스킬강화1/2/3
 	int upgradeS01, upgradeS02, upgradeS03;
+	
+	// 지역
 	int location;
+	
+	// 공격시 피해
 	int attack;
 	int expMax = 100;
 	int expGive = 10;
@@ -18,24 +26,29 @@ class Monster extends Time {
 	void skill_info() {
 		;
 	}
-
+	
+	// 스킬1 메서드
 	public int skill01() {
 		return 0;
 	};
-
+	
+	// 스킬2 메서드
 	public int skill02() {
 		return 0;
 	};
 
+	// 스킬3 메서드
 	public int skill03() {
 		return 0;
 	};
 
+	// 공격 메서드
 	int attack() {
 		return attack;
 	}
-
-	int current_power() { // 현재 time에 맞는 power return > 전투 공격력 산출 시 활용
+	
+	// 현재 time에 맞는 power return > 전투 공격력 산출 시 활용
+	int current_power() { 
 		int power_copy = power;
 		if (super.current_time() <= 6) { // time이 낮인 경우
 			if (Nocturnality == 0) { // 낮이면서 주행성 동물
@@ -56,6 +69,9 @@ class Monster extends Time {
 
 // location: 지역 (1: 서울, 2: 강원도, 3: 충청도, 4: 전라도, 5: 경상도, 6: 제주도)
 // 기본 능력치: 1,2 지역 기준 3,4 = 기준 * 10, 5,6 * 100
+
+// 몬스터 클래스를 상속받는 하위 몬스터별 클래스
+// 모기
 class Mosquito extends Monster {
 	Mosquito(int level, int location) {
 		this.tribe = "모기";
@@ -77,12 +93,14 @@ class Mosquito extends Monster {
 		System.out.println("0. 일반공격");
 		System.out.println("1. 흡혈공격: 피해량만큼 체력 회복, 사용 mp: 10");
 	}
-
+	
+	// 일반 공격
 	int attack() {
 		return attack;
 	}
-
-	public int skill01() {// 몬스터 고유스킬 흡혈공격
+	
+	// 몬스터 고유스킬 흡혈공격
+	public int skill01() {
 		int attack_upgrade = attack + upgradeS01;
 		this.mp -= 10;
 		this.hp += attack_upgrade / 2; // 입힌피해만큼 회복
@@ -92,7 +110,7 @@ class Mosquito extends Monster {
 	}
 }
 
-// 하루살이 클래스
+// 하루살이
 class Mayfly extends Monster {
 	Mayfly(int level, int location) {
 		this.tribe = "하루살이";
@@ -126,7 +144,7 @@ class Mayfly extends Monster {
 	}
 }
 
-// 바퀴벌레 클래스
+// 바퀴벌레
 class Roach extends Monster {
 	Roach(int level, int location) {
 		this.tribe = "바퀴벌레";
@@ -161,7 +179,7 @@ class Roach extends Monster {
 	}
 }
 
-//나비 클래스
+//나비
 class Butterfly extends Monster {
 	Butterfly(int level, int location) {
 		this.tribe = "나비";
@@ -195,7 +213,7 @@ class Butterfly extends Monster {
 	}
 }
 
-//꿀벌 클래스
+//꿀벌 
 class Honeybee extends Monster {
 	Honeybee(int level, int location) {
 		this.tribe = "꿀법";
@@ -230,7 +248,7 @@ class Honeybee extends Monster {
 	}
 }
 
-//거미 클래스
+//거미
 class Spider extends Monster {
 	Spider(int level, int location) {
 		this.tribe = "거미";
@@ -264,7 +282,7 @@ class Spider extends Monster {
 	}
 }
 
-//쥐 클래스
+//쥐
 class Mouse extends Monster {
 	Mouse(int level, int location) {
 		this.tribe = "쥐";
@@ -314,7 +332,7 @@ class Mouse extends Monster {
 	}
 }
 
-//고양이 클래스
+//고양이
 class Cat extends Monster {
 	Cat(int level, int location) {
 		this.tribe = "고양이";
@@ -362,7 +380,7 @@ class Cat extends Monster {
 	}
 }
 
-//얼룩말 클래스
+//얼룩말
 class Zebra extends Monster {
 	Zebra(int level, int location) {
 		this.tribe = "얼룩말";
@@ -410,7 +428,7 @@ class Zebra extends Monster {
 	}
 }
 
-//붕어 클래스
+//붕어
 class Carp extends Monster {
 	Carp(int level, int location) {
 		this.tribe = "붕어";
@@ -444,7 +462,7 @@ class Carp extends Monster {
 	}
 }
 
-//악어거북 클래스
+//악어거북
 class Alligator_turtle extends Monster {
 	Alligator_turtle(int level, int location) {
 		this.tribe = "악어거북";
@@ -485,7 +503,7 @@ class Alligator_turtle extends Monster {
 	}
 }
 
-//수달 클래스
+//수달
 class Otter extends Monster {
 	Otter(int level, int location) {
 		this.tribe = "수달";
@@ -533,7 +551,7 @@ class Otter extends Monster {
 	}
 }
 
-//박쥐 클래스
+//박쥐
 class Bat extends Monster {
 	Bat(int level, int location) {
 		this.tribe = "박쥐";
@@ -567,7 +585,7 @@ class Bat extends Monster {
 	}
 }
 
-//비둘기 클래스
+//비둘기
 class Pigeon extends Monster {
 	Pigeon(int level, int location) {
 		this.tribe = "비둘기";
@@ -609,7 +627,7 @@ class Pigeon extends Monster {
 	}
 }
 
-//황조롱이 클래스
+//황조롱이
 class Kestrel extends Monster {
 	Kestrel(int level, int location) {
 		this.tribe = "황조롱이";
