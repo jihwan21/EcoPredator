@@ -191,6 +191,10 @@ public class Exploration {
 		if (judgment_clear(Achievement.RentCar, Achievement.Submarine, Achievement.JEJU_airline_plane) == 1) {
 			Jeju_clear = 1;
 		}
+		// 엔딩 장소 출
+		if (Jeju_clear == 1) {
+			System.out.println("7. ???");
+		}
 
 		// 지역별 영역 선택
 		System.out.print("탐험 지역을 선택하세요. ");
@@ -704,7 +708,15 @@ public class Exploration {
 			}
 			break;
 		}
-
+		case 7: {
+			System.out.println("??? 지역에 입장했습니다.");
+			System.out.println("??? 영역에 들어왔습니다.");
+			Human m1 = new Human();
+			Battle.battleEnding(m1);
+			System.exit(0);
+			break;
+		}
+				
 		}
 	}
 }
