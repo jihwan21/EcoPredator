@@ -9,7 +9,7 @@ import javax.swing.JLabel;
 import javax.swing.SwingUtilities;
 import javax.swing.Timer;
 
-public class ImageOutputExample {//이미지 불러오는 클래스
+public class ImageOutput {//이미지 불러오는 클래스
 	
 	public static void 사람눈() {
 		// 이미지 파일 경로
