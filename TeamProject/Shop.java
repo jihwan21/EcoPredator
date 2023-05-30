@@ -2,7 +2,7 @@ package TeamProject;
 
 import java.util.Scanner;
 
-class Shop extends Item {
+class Shop {
 	private UseItem HpPotion, MpPotion, Grenade;
 	private Equipment 아가미, 날개, 어항, Headpiece, Armor;
 	private Gaho 가호;
