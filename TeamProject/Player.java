@@ -46,7 +46,7 @@ class Player {
 
 					} else {
 						System.out.println("강화실패");
-						;
+						Player.투구N--; Player.h = null;
 					}
 				}
 			}
@@ -69,7 +69,7 @@ class Player {
 
 					} else {
 						System.out.println("강화실패");
-						;
+						Player.갑옷N--; Player.a = null;
 					}
 
 				}
