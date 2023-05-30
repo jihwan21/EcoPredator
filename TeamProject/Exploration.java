@@ -3,13 +3,13 @@ package TeamProject;
 import java.util.Scanner;
 
 public class Exploration {
-	// 지역 몬스터 모두 사냥했을 경우 구별 변수
+	// 지역 몬스터 모두 클리어했을 경우 구별 변수
 	static int Seoul_clear = 0, Gangwon_clear = 0, Chungcheong_clear = 0, Jeolla_clear = 0, Gyeongsang_clear = 0,
 			Jeju_clear = 0;
-	
+
 	// 영역 선택 변수(지상, 수중, 공중)
 	int area;
-	
+
 	// 전투 가능한 몬스터 목록 출력을 위한 변수
 	String 모기, 거미, 쥐, 고양이, 얼룩말, 붕어, 악어거북, 수달, 박쥐, 비둘기, 황조롱이, 다람쥐, 산양, 호랑이, 우럭, 오징어, 상어, 꾀꼬리, 부엉이, 독수리, 멧돼지, 쏘가리, 뉴트리아,
 			물총새, 두루미, 매, 구렁이, 세발낙지, 복어, 귀신고래, 고추잠자리, 제비, 백조, 하늘다람쥐, 노루, 반달가슴곰, 가오리, 전기뱀장어, 범고래, 갈매기, 알바트로스, 펠리컨, 렌트카,
@@ -47,12 +47,12 @@ public class Exploration {
 		Scanner in = new Scanner(System.in);
 		System.out.println("----- <진입 가능 영역> -----");
 		System.out.println("1. 지상");
-		if (Player.아가미N != 0) {
+		if (Player.아가미N != 0) { // 특수장비 존재 여부 확인
 			System.out.println("2. 수중");
 		} else {
 			System.out.println("2. 수중(선택 불가능)");
 		}
-		if (Player.날개N != 0) {
+		if (Player.날개N != 0) { // 특수장비 존재 여부 확인
 			System.out.println("3. 공중");
 		} else {
 			System.out.println("3. 공중(선택 불가능)");
@@ -131,46 +131,46 @@ public class Exploration {
 		// 지역 선택
 		System.out.println("----- <탐험 지역> -----");
 		System.out.println("1. 서울");
-		
+
 		// 서울 육,해,공 모든 스테이지 클리어 시 강원도, 충청도 탐험 가능
 		if (judgment_clear(Achievement.Mosquito, Achievement.Spider, Achievement.Mouse, Achievement.Cat,
 				Achievement.Zebra) == 1
 				&& judgment_clear(Achievement.Carp, Achievement.Alligator_turtle, Achievement.Otter) == 1
 				&& judgment_clear(Achievement.Bat, Achievement.Pigeon, Achievement.Kestrel) == 1) {
-			
+
 			// 서울 모든 스테이지 클리어 check
-			Seoul_clear = 1; 
+			Seoul_clear = 1;
 			System.out.println("2. 강원도");
 			System.out.println("3. 충청도");
 		} else {
 			System.out.println("2. 강원도(접근 불가능)");
 			System.out.println("3. 충청도(접근 불가능)");
 		}
-		
+
 		// 충청도 육,해,공 모든 스테이지 클리어 시 전라도 탐험 가능
 		if (judgment_clear(Achievement.Mouse3, Achievement.Cat3, Achievement.Boar) == 1
 				&& judgment_clear(Achievement.Carp2, Achievement.Mandarin_fish, Achievement.Nutria) == 1
 				&& judgment_clear(Achievement.Kingfisher, Achievement.Crane, Achievement.Falcon) == 1) {
-			
+
 			// 충청도 모든 스테이지 클리어 check
-			Chungcheong_clear = 1; 
+			Chungcheong_clear = 1;
 			System.out.println("4. 전라도");
 		} else {
 			System.out.println("4. 전라도(접근 불가능)");
 		}
-		
+
 		// 강원도 육,해,공 모든 스테이지 클리어 시 경상도 탐험 가능
 		if (judgment_clear(Achievement.Squirrel, Achievement.Goat, Achievement.Tiger) == 1
 				&& judgment_clear(Achievement.RockFish, Achievement.Squid, Achievement.Shark) == 1
 				&& judgment_clear(Achievement.Nightingale, Achievement.Owl, Achievement.Eagle) == 1) {
-			
+
 			// 강원도 모든 스테이지 클리어 check
-			Gangwon_clear = 1; 
+			Gangwon_clear = 1;
 			System.out.println("5. 경상도");
 		} else {
 			System.out.println("5. 경상도(접근 불가능)");
 		}
-		
+
 		// 서울, 강원도, 충청도, 경상도, 전라도 육,해,공 모든 스테이지 클리어 시 제주도 탐험 가능
 		if (judgment_clear(Achievement.Flying_Squirrel, Achievement.Deer, Achievement.Thibetanus) == 1
 				&& judgment_clear(Achievement.Ray, Achievement.Electric_ell, Achievement.Orca) == 1
@@ -178,16 +178,16 @@ public class Exploration {
 				&& judgment_clear(Achievement.Mouse4, Achievement.Snake, Achievement.Tiger4) == 1
 				&& judgment_clear(Achievement.Raw_Octopus, Achievement.BlowFish, Achievement.Gray_Whale) == 1
 				&& judgment_clear(Achievement.Red_Dragonfly, Achievement.Swallow, Achievement.Swan) == 1) {
-			
+
 			// 전라도 모든 스테이지 클리어 check
 			// 경상도 모든 스테이지 클리어 check
-			Jeolla_clear = 1; 
-			Gyeongsang_clear = 1; 
+			Jeolla_clear = 1;
+			Gyeongsang_clear = 1;
 			System.out.println("6. 제주도");
 		} else {
 			System.out.println("6. 제주도(접근 불가능)");
 		}
-
+		// 제주도 몬스터 전부 클리어한 경우
 		if (judgment_clear(Achievement.RentCar, Achievement.Submarine, Achievement.JEJU_airline_plane) == 1) {
 			Jeju_clear = 1;
 		}
@@ -240,7 +240,7 @@ public class Exploration {
 				}
 			}
 			if (area == 2) {
-				if (Player.아가미N == 0) {
+				if (Player.아가미N == 0) { // 특수장비 존재 여부 확인
 					System.out.println("특수장비 <아가미>가 없어서 접근이 불가합니다.");
 					break;
 				}
@@ -267,7 +267,7 @@ public class Exploration {
 				}
 			}
 			if (area == 3) {
-				if (Player.날개N == 0) {
+				if (Player.날개N == 0) { // 특수장비 존재 여부 확인
 					System.out.println("특수장비 <날개>가 없어서 접근이 불가합니다.");
 					break;
 				}
@@ -297,7 +297,7 @@ public class Exploration {
 		}
 
 		case 2: {
-			if (Seoul_clear == 0) {
+			if (Seoul_clear == 0) { // 이전 지역 클리어해야 접근가능하도록 조건문 설정
 				System.out.println(">> 현재 접근할 수 없는 지역입니다.");
 				break;
 			}
