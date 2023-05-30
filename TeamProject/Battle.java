@@ -416,16 +416,16 @@ public class Battle {
 	static void battleEnding(Human m1) {// 엔딩 배틀 메서드
 		Scanner in = new Scanner(System.in);
 		Print.printBar();// 구분선
-		ImageOutputExample.사람눈();// 사진 가져오기
+		ImageOutput.사람눈();// 사진 가져오기
 
 		System.out.print("Enter를 누르세요.");
 		String n = in.nextLine();
 
 		end1();// 엔딩멘트 1
 		공백();
-		ImageOutputExample.환경파괴();
+		ImageOutput.환경파괴();
 		공백();
-		ImageOutputExample.공장연기();
+		ImageOutput.공장연기();
 
 		System.out.print("Enter를 누르세요.");
 		n = in.nextLine();
